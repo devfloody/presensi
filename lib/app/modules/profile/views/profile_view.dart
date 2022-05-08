@@ -16,6 +16,7 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profil'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(

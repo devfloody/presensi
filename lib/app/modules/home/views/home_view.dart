@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -16,16 +15,8 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Beranda'),
+        centerTitle: true,
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Get.offAllNamed(Routes.LOGIN);
-            },
-            icon: Icon(IconlyLight.logout),
-          ),
-        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16),
@@ -92,7 +83,9 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.offAllNamed(Routes.JADWAL);
+                },
                 child: Text('Lihat Semua'),
               ),
             ],
@@ -130,19 +123,11 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           Text(
-                            'A - 7.30 AM',
+                            'Ruang Elektronika',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: CustomColor.grey,
-                            ),
-                          ),
-                          Text(
-                            'R. Elektronika',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: CustomColor.black,
                             ),
                           ),
                         ],
@@ -152,9 +137,16 @@ class HomeView extends GetView<HomeController> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/elc.jpg'),
-                            fit: BoxFit.cover,
+                          color: CustomColor.primary,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'A',
+                            style: TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.w500,
+                              color: CustomColor.white,
+                            ),
                           ),
                         ),
                       ),
@@ -207,7 +199,9 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.offAllNamed(Routes.RIWAYAT);
+                },
                 child: Text('Lihat Semua'),
               ),
             ],
@@ -245,19 +239,11 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           Text(
-                            'A - 7.30 AM',
+                            'Ruang Elektronika',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: CustomColor.grey,
-                            ),
-                          ),
-                          Text(
-                            'R. Elektronika',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: CustomColor.black,
                             ),
                           ),
                         ],
@@ -267,9 +253,16 @@ class HomeView extends GetView<HomeController> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/elc.jpg'),
-                            fit: BoxFit.cover,
+                          color: CustomColor.lightGrey,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'A',
+                            style: TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.w500,
+                              color: CustomColor.black,
+                            ),
                           ),
                         ),
                       ),
