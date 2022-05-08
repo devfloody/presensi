@@ -11,6 +11,7 @@ abstract class Routes {
   static const JADWAL = _Paths.JADWAL;
   static const PROFILE = _Paths.PROFILE;
   static const ADD_JADWAL = _Paths.ADD_JADWAL;
+  static const LUPA_PASSWORD = _Paths.LUPA_PASSWORD;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const JADWAL = '/jadwal';
   static const PROFILE = '/profile';
   static const ADD_JADWAL = '/add-jadwal';
+  static const LUPA_PASSWORD = '/lupa-password';
 }

@@ -8,6 +8,8 @@ import 'package:presensi/app/modules/jadwal/bindings/jadwal_binding.dart';
 import 'package:presensi/app/modules/jadwal/views/jadwal_view.dart';
 import 'package:presensi/app/modules/login/bindings/login_binding.dart';
 import 'package:presensi/app/modules/login/views/login_view.dart';
+import 'package:presensi/app/modules/lupa_password/bindings/lupa_password_binding.dart';
+import 'package:presensi/app/modules/lupa_password/views/lupa_password_view.dart';
 import 'package:presensi/app/modules/profile/bindings/profile_binding.dart';
 import 'package:presensi/app/modules/profile/views/profile_view.dart';
 import 'package:presensi/app/modules/riwayat/bindings/riwayat_binding.dart';
@@ -61,6 +63,11 @@ class AppPages {
       name: _Paths.ADD_JADWAL,
       page: () => AddJadwalView(),
       binding: AddJadwalBinding(),
+    ),
+    GetPage(
+      name: _Paths.LUPA_PASSWORD,
+      page: () => LupaPasswordView(),
+      binding: LupaPasswordBinding(),
     ),
   ];
 }
