@@ -15,7 +15,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Beranda'),
         elevation: 0,
         actions: [
           IconButton(
@@ -325,7 +325,7 @@ class HomeView extends GetView<HomeController> {
           destinations: [
             NavigationDestination(
               icon: Icon(IconlyLight.home),
-              label: 'Home',
+              label: 'Beranda',
               selectedIcon: Icon(IconlyBold.home),
             ),
             NavigationDestination(
@@ -340,7 +340,7 @@ class HomeView extends GetView<HomeController> {
             ),
             NavigationDestination(
               icon: Icon(IconlyLight.profile),
-              label: 'Profile',
+              label: 'Profil',
               selectedIcon: Icon(IconlyBold.profile),
             ),
           ],

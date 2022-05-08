@@ -47,7 +47,7 @@ class ProfileView extends GetView<ProfileController> {
           destinations: [
             NavigationDestination(
               icon: Icon(IconlyLight.home),
-              label: 'Home',
+              label: 'Beranda',
               selectedIcon: Icon(IconlyBold.home),
             ),
             NavigationDestination(
@@ -62,7 +62,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
             NavigationDestination(
               icon: Icon(IconlyLight.profile),
-              label: 'Profile',
+              label: 'Profil',
               selectedIcon: Icon(IconlyBold.profile),
             ),
           ],

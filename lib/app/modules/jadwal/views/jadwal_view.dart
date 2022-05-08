@@ -85,7 +85,7 @@ class JadwalView extends GetView<JadwalController> {
           destinations: [
             NavigationDestination(
               icon: Icon(IconlyLight.home),
-              label: 'Home',
+              label: 'Beranda',
               selectedIcon: Icon(IconlyBold.home),
             ),
             NavigationDestination(
@@ -100,7 +100,7 @@ class JadwalView extends GetView<JadwalController> {
             ),
             NavigationDestination(
               icon: Icon(IconlyLight.profile),
-              label: 'Profile',
+              label: 'Profil',
               selectedIcon: Icon(IconlyBold.profile),
             ),
           ],
