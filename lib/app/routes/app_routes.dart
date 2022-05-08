@@ -10,6 +10,7 @@ abstract class Routes {
   static const RIWAYAT = _Paths.RIWAYAT;
   static const JADWAL = _Paths.JADWAL;
   static const PROFILE = _Paths.PROFILE;
+  static const ADD_JADWAL = _Paths.ADD_JADWAL;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const RIWAYAT = '/riwayat';
   static const JADWAL = '/jadwal';
   static const PROFILE = '/profile';
+  static const ADD_JADWAL = '/add-jadwal';
 }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:presensi/app/modules/add_jadwal/bindings/add_jadwal_binding.dart';
+import 'package:presensi/app/modules/add_jadwal/views/add_jadwal_view.dart';
 import 'package:presensi/app/modules/home/bindings/home_binding.dart';
 import 'package:presensi/app/modules/home/views/home_view.dart';
 import 'package:presensi/app/modules/jadwal/bindings/jadwal_binding.dart';
@@ -54,6 +56,11 @@ class AppPages {
       page: () => ProfileView(),
       binding: ProfileBinding(),
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.ADD_JADWAL,
+      page: () => AddJadwalView(),
+      binding: AddJadwalBinding(),
     ),
   ];
 }

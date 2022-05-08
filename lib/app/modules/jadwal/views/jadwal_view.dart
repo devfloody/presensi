@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:presensi/app/routes/app_pages.dart';
 
 import '../../../config/theme.dart';
 import '../../../controllers/main_controller.dart';
@@ -14,14 +15,51 @@ class JadwalView extends GetView<JadwalController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('JadwalView'),
+        title: Text('Jadwal'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => Get.toNamed(Routes.ADD_JADWAL),
+            icon: Icon(IconlyLight.plus),
+          ),
+        ],
       ),
-      body: Center(
-        child: Text(
-          'JadwalView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 12),
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: CustomColor.grey,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 12),
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: CustomColor.grey,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 12),
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: CustomColor.grey,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 12),
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: CustomColor.grey,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
