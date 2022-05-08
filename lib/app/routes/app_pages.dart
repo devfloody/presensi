@@ -1,21 +1,26 @@
 import 'package:get/get.dart';
 
-import 'package:presensi/app/modules/add_jadwal/bindings/add_jadwal_binding.dart';
-import 'package:presensi/app/modules/add_jadwal/views/add_jadwal_view.dart';
-import 'package:presensi/app/modules/home/bindings/home_binding.dart';
-import 'package:presensi/app/modules/home/views/home_view.dart';
-import 'package:presensi/app/modules/jadwal/bindings/jadwal_binding.dart';
-import 'package:presensi/app/modules/jadwal/views/jadwal_view.dart';
-import 'package:presensi/app/modules/login/bindings/login_binding.dart';
-import 'package:presensi/app/modules/login/views/login_view.dart';
-import 'package:presensi/app/modules/lupa_password/bindings/lupa_password_binding.dart';
-import 'package:presensi/app/modules/lupa_password/views/lupa_password_view.dart';
-import 'package:presensi/app/modules/profile/bindings/profile_binding.dart';
-import 'package:presensi/app/modules/profile/views/profile_view.dart';
-import 'package:presensi/app/modules/riwayat/bindings/riwayat_binding.dart';
-import 'package:presensi/app/modules/riwayat/views/riwayat_view.dart';
-import 'package:presensi/app/modules/signup/bindings/signup_binding.dart';
-import 'package:presensi/app/modules/signup/views/signup_view.dart';
+import '../modules/add_jadwal/bindings/add_jadwal_binding.dart';
+import '../modules/add_jadwal/views/add_jadwal_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/jadwal/bindings/jadwal_binding.dart';
+import '../modules/jadwal/views/jadwal_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/lupa_password/bindings/lupa_password_binding.dart';
+import '../modules/lupa_password/views/lupa_password_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/profile/views/tentang_view.dart';
+import '../modules/riwayat/bindings/riwayat_binding.dart';
+import '../modules/riwayat/views/riwayat_view.dart';
+import '../modules/signup/bindings/signup_binding.dart';
+import '../modules/signup/views/signup_view.dart';
+import '../modules/update_password/bindings/update_password_binding.dart';
+import '../modules/update_password/views/update_password_view.dart';
+import '../modules/update_profile/bindings/update_profile_binding.dart';
+import '../modules/update_profile/views/update_profile_view.dart';
 
 part 'app_routes.dart';
 
@@ -60,6 +65,10 @@ class AppPages {
       transition: Transition.fadeIn,
     ),
     GetPage(
+      name: _Paths.TENTANG,
+      page: () => TentangView(),
+    ),
+    GetPage(
       name: _Paths.ADD_JADWAL,
       page: () => AddJadwalView(),
       binding: AddJadwalBinding(),
@@ -68,6 +77,16 @@ class AppPages {
       name: _Paths.LUPA_PASSWORD,
       page: () => LupaPasswordView(),
       binding: LupaPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPDATE_PROFILE,
+      page: () => UpdateProfileView(),
+      binding: UpdateProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPDATE_PASSWORD,
+      page: () => UpdatePasswordView(),
+      binding: UpdatePasswordBinding(),
     ),
   ];
 }

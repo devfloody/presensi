@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:presensi/app/routes/app_pages.dart';
 
 import '../../../config/theme.dart';
 import '../../../controllers/main_controller.dart';
@@ -59,16 +60,24 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 32),
                 ListTile(
-                  onTap: () {},
+                  onTap: () => Get.toNamed(Routes.UPDATE_PROFILE),
                   leading: Icon(IconlyBold.profile),
                   title: Text('Update Profil'),
+                  iconColor: Color.fromARGB(255, 57, 57, 57),
+                  tileColor: CustomColor.lightGrey,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+                ListTile(
+                  onTap: () => Get.toNamed(Routes.UPDATE_PASSWORD),
+                  leading: Icon(IconlyBold.profile),
+                  title: Text('Update Password'),
                   iconColor: CustomColor.black,
                   tileColor: CustomColor.lightGrey,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
                 SizedBox(height: 12),
                 ListTile(
-                  onTap: () {},
+                  onTap: () => Get.toNamed(Routes.TENTANG),
                   leading: Icon(IconlyBold.info_circle),
                   title: Text('Tentang Aplikasi'),
                   iconColor: CustomColor.black,
