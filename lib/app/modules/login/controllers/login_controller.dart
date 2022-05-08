@@ -8,17 +8,32 @@ class LoginController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController passCtrl = TextEditingController();
 
+  RxBool isLoading = false.obs;
+
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<void> login() async {
     if (emailCtrl.text.isNotEmpty && passCtrl.text.isNotEmpty) {
+      isLoading.value = true;
       try {
         UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: emailCtrl.text.trim(),
           password: passCtrl.text.trim(),
         );
+
         if (userCredential.user != null) {
-          Get.offAllNamed(Routes.HOME);
+          print(userCredential);
+
+          if (userCredential.user!.emailVerified == true) {
+            isLoading.value = false;
+            Get.offAllNamed(Routes.HOME);
+          } else {
+            Get.defaultDialog(
+              title: 'Email Belum Diverifikasi',
+              middleText: 'Silahkan verifikasi email anda.',
+            );
+            isLoading.value = false;
+          }
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'wrong-password') {

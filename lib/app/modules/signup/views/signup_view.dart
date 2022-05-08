@@ -96,19 +96,23 @@ class SignupView extends GetView<SignupController> {
               ),
             ),
             SizedBox(height: 8),
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: CustomColor.primary,
-                ),
-                onPressed: () {
-                  controller.signUp();
-                },
-                child: Text(
-                  'Daftar',
-                  style: Theme.of(context).textTheme.button?.copyWith(color: CustomColor.white),
+            Obx(
+              () => SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: CustomColor.primary,
+                  ),
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      controller.signUp();
+                    }
+                  },
+                  child: Text(
+                    controller.isLoading.isFalse ? 'Daftar' : 'Loading...',
+                    style: Theme.of(context).textTheme.button?.copyWith(color: CustomColor.white),
+                  ),
                 ),
               ),
             ),

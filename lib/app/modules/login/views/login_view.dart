@@ -65,17 +65,23 @@ class LoginView extends GetView<LoginController> {
               ],
             ),
             SizedBox(height: 24),
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: CustomColor.secondary,
-                ),
-                onPressed: () => controller.login(),
-                child: Text(
-                  'Masuk',
-                  style: Theme.of(context).textTheme.button,
+            Obx(
+              () => SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: CustomColor.secondary,
+                  ),
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      await controller.login();
+                    }
+                  },
+                  child: Text(
+                    controller.isLoading.isFalse ? 'Masuk' : 'Loading...',
+                    style: Theme.of(context).textTheme.button,
+                  ),
                 ),
               ),
             ),

@@ -9,19 +9,34 @@ import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   final mainCtrl = Get.find<MainController>();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ProfileView'),
-        centerTitle: true,
+        title: Text('Profil'),
+        elevation: 0,
       ),
-      body: Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: ListView(
+        padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+        children: [
+          CircleAvatar(
+            backgroundColor: CustomColor.primary,
+            radius: 45,
+            child: Image.asset('assets/images/avtar.png'),
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Harry Meguire',
+            style: Theme.of(context).textTheme.headline2!.copyWith(color: CustomColor.black),
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            'Asisten',
+            style: Theme.of(context).textTheme.headline4!.copyWith(color: CustomColor.black),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
