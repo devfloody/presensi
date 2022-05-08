@@ -67,9 +67,10 @@ class ProfileView extends GetView<ProfileController> {
                   tileColor: CustomColor.lightGrey,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
+                SizedBox(height: 12),
                 ListTile(
                   onTap: () => Get.toNamed(Routes.UPDATE_PASSWORD),
-                  leading: Icon(IconlyBold.profile),
+                  leading: Icon(IconlyBold.lock),
                   title: Text('Update Password'),
                   iconColor: CustomColor.black,
                   tileColor: CustomColor.lightGrey,
