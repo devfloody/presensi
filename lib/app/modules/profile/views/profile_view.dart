@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -17,26 +18,81 @@ class ProfileView extends GetView<ProfileController> {
         title: Text('Profil'),
         elevation: 0,
       ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-        children: [
-          CircleAvatar(
-            backgroundColor: CustomColor.primary,
-            radius: 45,
-            child: Image.asset('assets/images/avtar.png'),
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Harry Meguire',
-            style: Theme.of(context).textTheme.headline2!.copyWith(color: CustomColor.black),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            'Asisten',
-            style: Theme.of(context).textTheme.headline4!.copyWith(color: CustomColor.black),
-            textAlign: TextAlign.center,
-          ),
-        ],
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: controller.streamUser(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasData) {
+            Map<String, dynamic> user = snapshot.data!.data()!;
+            print(user);
+
+            return ListView(
+              padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+              children: [
+                Center(
+                  child: ClipOval(
+                    child: Container(
+                      height: 100,
+                      width: 100,
+                      child: Image.network(
+                        'https://ui-avatars.com/api/?name=${user['name']}&background=FFAF5A',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  '${user['name']}',
+                  style: Theme.of(context).textTheme.headline2!.copyWith(color: CustomColor.black),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  '${user['role']} - ${user['nim_or_nik']}',
+                  style: Theme.of(context).textTheme.headline4!.copyWith(color: CustomColor.black),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 32),
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(IconlyBold.profile),
+                  title: Text('Update Profil'),
+                  iconColor: CustomColor.black,
+                  tileColor: CustomColor.lightGrey,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+                SizedBox(height: 12),
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(IconlyBold.info_circle),
+                  title: Text('Tentang Aplikasi'),
+                  iconColor: CustomColor.black,
+                  tileColor: CustomColor.lightGrey,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+                SizedBox(height: 12),
+                ListTile(
+                  onTap: () {
+                    controller.logout();
+                  },
+                  leading: Icon(IconlyBold.logout),
+                  title: Text('Keluar'),
+                  iconColor: CustomColor.black,
+                  tileColor: CustomColor.lightGrey,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+              ],
+            );
+          } else {
+            return Center(
+              child: Text('Data tidak ditemukan'),
+            );
+          }
+        },
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
