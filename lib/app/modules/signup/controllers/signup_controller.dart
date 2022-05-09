@@ -54,7 +54,7 @@ class SignupController extends GetxController {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           isLoading.value = false;
-          Get.snackbar('Ubah Password', 'Password terlalu lemah.');
+          Get.snackbar('Ubah Password', 'Password anda terlalu lemah.');
         } else if (e.code == 'email-already-in-use') {
           isLoading.value = false;
           Get.snackbar('Ubah Email', 'Email yang anda gunakan telah terdaftar.');
