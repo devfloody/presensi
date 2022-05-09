@@ -16,7 +16,6 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         title: Text('Beranda'),
         centerTitle: true,
-        elevation: 0,
       ),
       body: ListView(
         padding: EdgeInsets.all(16),

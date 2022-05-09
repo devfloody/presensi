@@ -18,7 +18,6 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         title: Text('Profil'),
         centerTitle: true,
-        elevation: 0,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: controller.streamUser(),
@@ -60,7 +59,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 32),
                 ListTile(
-                  onTap: () => Get.toNamed(Routes.UPDATE_PROFILE),
+                  onTap: () => Get.toNamed(Routes.UPDATE_PROFILE, arguments: user,),
                   leading: Icon(IconlyBold.profile),
                   title: Text('Update Profil'),
                   iconColor: Color.fromARGB(255, 57, 57, 57),
