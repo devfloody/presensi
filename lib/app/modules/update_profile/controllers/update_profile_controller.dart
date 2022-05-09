@@ -45,12 +45,25 @@ class UpdateProfileController extends GetxController {
           data.addAll({'photoURL': imageUrl});
         }
         await db.collection('pengguna').doc(uid).update(data);
+        Get.back();
         Get.snackbar('Berhasil', 'Berhasil mengupdate profil');
       } catch (e) {
         Get.snackbar('Gagal', 'Gagal mengupdate profil');
       } finally {
         isLoading.value = false;
       }
+    }
+  }
+
+  void hapusProfil(String uid) async {
+    try {
+      await db.collection('pengguna').doc(uid).update({'photoURL': FieldValue.delete()});
+      Get.back();
+      Get.snackbar('Berhasil', 'Berhasil menghapus foto profil');
+    } catch (e) {
+      Get.snackbar('Gagal', 'Gagal menghapus foto profil');
+    } finally {
+      update();
     }
   }
 }

@@ -52,14 +52,6 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 8),
-                              InkWell(
-                                onTap: () {},
-                                child: Text(
-                                  'Hapus',
-                                  style: Theme.of(context).textTheme.button,
-                                ),
-                              ),
                             ],
                           );
                         } else {
@@ -78,7 +70,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                                 ),
                                 SizedBox(height: 8),
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () => controller.hapusProfil(user['uid']),
                                   child: Text(
                                     'Hapus',
                                     style: Theme.of(context).textTheme.button,
