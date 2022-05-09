@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -22,6 +24,94 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
         body: ListView(
           padding: EdgeInsets.all(20),
           children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Ubah Foto Profil',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4!
+                      .copyWith(color: CustomColor.black, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 16),
+                Column(
+                  children: [
+                    GetBuilder<UpdateProfileController>(
+                      builder: (ctrl) {
+                        if (ctrl.image != null) {
+                          return Column(
+                            children: [
+                              ClipOval(
+                                child: Container(
+                                  width: 80,
+                                  height: 80,
+                                  child: Image.file(
+                                    File(ctrl.image!.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  'Hapus',
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          if (user['photoURL'] != null) {
+                            return Column(
+                              children: [
+                                ClipOval(
+                                  child: Container(
+                                    width: 80,
+                                    height: 80,
+                                    child: Image.network(
+                                      user['photoURL'],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Text(
+                                    'Hapus',
+                                    style: Theme.of(context).textTheme.button,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                          return Text(
+                            'Tidak Ada Foto',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5!
+                                .copyWith(color: CustomColor.grey),
+                          );
+                        }
+                      },
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        controller.pickImage();
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: CustomColor.primary,
+                        primary: CustomColor.white,
+                      ),
+                      child: Text('Pilih file'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
             TextField(
               controller: controller.emailCtrl,
               readOnly: true,
@@ -68,7 +158,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                 ),
               ),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 32),
             Obx(
               () => SizedBox(
                 height: 50,

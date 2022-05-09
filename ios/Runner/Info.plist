@@ -45,5 +45,11 @@
 		<false/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Presensi memerlukan akses fotogaleri</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Presensi memerlukan akses kamera</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Presensi memerlukan akses mikrofon</string>
 	</dict>
 </plist>
