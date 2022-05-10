@@ -11,7 +11,7 @@ class HomeController extends GetxController {
     yield* db.collection('pengguna').doc(uid).snapshots();
   }
 
-  Stream<QuerySnapshot> jadwalStream() async* {
+  Stream<QuerySnapshot<Map<String, dynamic>>> jadwalStream() async* {
     String uid = await auth.currentUser!.uid;
     yield* db.collection('pengguna').doc(uid).collection('jadwal').snapshots();
   }

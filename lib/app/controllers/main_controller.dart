@@ -7,7 +7,6 @@ class MainController extends GetxController {
 
   void changePage(int index) {
     currentIndex.value = index;
-
     switch (index) {
       case 1:
         Get.offAllNamed(Routes.RIWAYAT);
@@ -21,5 +20,9 @@ class MainController extends GetxController {
       default:
         Get.offAllNamed(Routes.HOME);
     }
+  }
+
+  void absen() {
+    
   }
 }

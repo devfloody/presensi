@@ -255,7 +255,7 @@ class HomeView extends GetView<HomeController> {
           SizedBox(
             height: 280,
             width: double.infinity,
-            child: StreamBuilder<QuerySnapshot>(
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: controller.jadwalStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -267,6 +267,7 @@ class HomeView extends GetView<HomeController> {
                   final jadwal = snapshot.requireData;
                   return ListView.builder(
                     itemBuilder: (context, index) {
+                      Map<String, dynamic> jadwalList = snapshot.data!.docs[index].data();
                       return Container(
                         margin: EdgeInsets.only(right: 12),
                         padding: EdgeInsets.all(16),
@@ -286,7 +287,7 @@ class HomeView extends GetView<HomeController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  jadwal.docs[index]['praktikum'],
+                                  jadwalList['praktikum'],
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -294,7 +295,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                                 Text(
-                                  'Ruang ${jadwal.docs[index]['ruang']}',
+                                  'Ruang ${jadwalList['ruang']}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -312,7 +313,7 @@ class HomeView extends GetView<HomeController> {
                               ),
                               child: Center(
                                 child: Text(
-                                  jadwal.docs[index]['kelas'],
+                                  jadwalList['kelas'],
                                   style: TextStyle(
                                     fontSize: 48,
                                     fontWeight: FontWeight.w500,
