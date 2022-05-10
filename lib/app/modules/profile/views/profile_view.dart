@@ -132,6 +132,7 @@ class ProfileView extends GetView<ProfileController> {
         ),
         child: NavigationBar(
           selectedIndex: mainCtrl.currentIndex.value,
+          animationDuration: Duration(seconds: 8),
           onDestinationSelected: (int i) => mainCtrl.changePage(i),
           destinations: [
             NavigationDestination(

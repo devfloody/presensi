@@ -20,155 +20,170 @@ class JadwalView extends GetView<JadwalController> {
       appBar: AppBar(
         title: Text('Jadwal'),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () => Get.toNamed(Routes.ADD_JADWAL),
-            icon: Icon(IconlyLight.plus),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          SizedBox(
+            height: 50,
+            width: double.infinity,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: CustomColor.secondary,
+              ),
+              onPressed: () => Get.toNamed(Routes.ADD_JADWAL),
+              child: Text(
+                '+ Tambah Jadwal',
+                style: Theme.of(context).textTheme.button?.copyWith(color: CustomColor.black),
+              ),
+            ),
+          ),
+          SizedBox(height: 24),
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: controller.jadwalStream(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasData) {
+                final data = snapshot.requireData;
+                return ListView.builder(
+                  itemCount: data.docs.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    Map<String, dynamic> jadwalList = snapshot.data!.docs[index].data();
+                    String kode = 'Unknown';
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 12),
+                      padding: EdgeInsets.all(16),
+                      height: 175,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: CustomColor.lightGrey),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Praktikum\n${jadwalList['praktikum']}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: CustomColor.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text('Kode : ${jadwalList['kode']}'),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Dosen : ${jadwalList['dosen']}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: CustomColor.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Ruang : ${jadwalList['ruang']}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomColor.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Praktikan : ${jadwalList['jml_mhs']} mahasiswa',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomColor.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.primary,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    jadwalList['kelas'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 28,
+                                      color: CustomColor.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.secondary,
+                                ),
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () async {
+                                      try {
+                                        kode = await FlutterBarcodeScanner.scanBarcode(
+                                            '#34CA74', 'Batal', true, ScanMode.QR);
+                                        if (kode == jadwalList['kode']) {
+                                          Get.toNamed(Routes.ABSEN, arguments: jadwalList);
+                                        } else {
+                                          Get.snackbar('Error', 'Kode tidak dikenali.');
+                                        }
+                                      } on PlatformException {
+                                        print('Failed to get platform version.');
+                                      }
+                                    },
+                                    icon: Icon(
+                                      IconlyLight.scan,
+                                      size: 28,
+                                      color: CustomColor.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return Center(
+                  child: Text('Tidak ada data jadwal'),
+                );
+              }
+            },
           ),
         ],
-      ),
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: controller.jadwalStream(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasData) {
-            final data = snapshot.requireData;
-            return ListView.builder(
-              padding: EdgeInsets.all(16),
-              itemCount: data.docs.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> jadwalList = snapshot.data!.docs[index].data();
-                String kode = 'Unknown';
-                return Container(
-                  margin: EdgeInsets.only(bottom: 12),
-                  padding: EdgeInsets.all(16),
-                  height: 175,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: CustomColor.lightGrey),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Praktikum\n${jadwalList['praktikum']}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: CustomColor.black,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text('Kode : ${jadwalList['kode']}'),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Dosen : ${jadwalList['dosen']}',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: CustomColor.black,
-                                ),
-                              ),
-                              Text(
-                                'Ruang : ${jadwalList['ruang']}',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: CustomColor.black,
-                                ),
-                              ),
-                              Text(
-                                'Praktikan : ${jadwalList['jml_mhs']} mahasiswa',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: CustomColor.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: CustomColor.primary,
-                            ),
-                            child: Center(
-                              child: Text(
-                                jadwalList['kelas'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 28,
-                                  color: CustomColor.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: CustomColor.secondary,
-                            ),
-                            child: Center(
-                              child: IconButton(
-                                onPressed: () async {
-                                  try {
-                                    kode = await FlutterBarcodeScanner.scanBarcode(
-                                        '#34CA74', 'Batal', true, ScanMode.QR);
-                                    if (kode == jadwalList['kode']) {
-                                      Get.toNamed(Routes.ABSEN, arguments: jadwalList);
-                                    } else {
-                                      Get.snackbar('Error', 'Kode tidak dikenali.');
-                                    }
-                                  } on PlatformException {
-                                    print('Failed to get platform version.');
-                                  }
-                                },
-                                icon: Icon(
-                                  IconlyLight.scan,
-                                  size: 28,
-                                  color: CustomColor.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          } else {
-            return Center(
-              child: Text('Tidak ada data jadwal'),
-            );
-          }
-        },
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
@@ -190,6 +205,7 @@ class JadwalView extends GetView<JadwalController> {
         ),
         child: NavigationBar(
           selectedIndex: mainCtrl.currentIndex.value,
+          animationDuration: Duration(seconds: 8),
           onDestinationSelected: (int i) => mainCtrl.changePage(i),
           destinations: [
             NavigationDestination(

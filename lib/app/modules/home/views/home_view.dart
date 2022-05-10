@@ -116,6 +116,7 @@ class HomeView extends GetView<HomeController> {
               TextButton(
                 onPressed: () {
                   Get.offAllNamed(Routes.JADWAL);
+                  mainCtrl.currentIndex.value = 2;
                 },
                 child: Text('Lihat Semua'),
               ),
@@ -262,6 +263,7 @@ class HomeView extends GetView<HomeController> {
               TextButton(
                 onPressed: () {
                   Get.offAllNamed(Routes.RIWAYAT);
+                  mainCtrl.currentIndex.value = 1;
                 },
                 child: Text('Lihat Semua'),
               ),
@@ -392,6 +394,7 @@ class HomeView extends GetView<HomeController> {
         ),
         child: NavigationBar(
           selectedIndex: mainCtrl.currentIndex.value,
+          animationDuration: Duration(seconds: 8),
           onDestinationSelected: (int i) => mainCtrl.changePage(i),
           destinations: [
             NavigationDestination(
