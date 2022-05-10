@@ -132,7 +132,7 @@ class JadwalView extends GetView<JadwalController> {
                                     kode = await FlutterBarcodeScanner.scanBarcode(
                                         '#34CA74', 'Batal', true, ScanMode.QR);
                                     if (kode == jadwalList['kode']) {
-                                      Get.offAndToNamed(Routes.ABSEN, arguments: jadwalList);
+                                      Get.toNamed(Routes.ABSEN, arguments: jadwalList);
                                     } else {
                                       Get.snackbar('Error', 'Kode tidak dikenali.');
                                     }
