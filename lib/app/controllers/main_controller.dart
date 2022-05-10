@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:presensi/app/routes/app_pages.dart';
+
+import '../routes/app_pages.dart';
 
 class MainController extends GetxController {
   RxInt currentIndex = 0.obs;
