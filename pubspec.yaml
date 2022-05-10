@@ -13,6 +13,7 @@ dependencies:
   firebase_storage: ^10.2.15
   flutter:
     sdk: flutter
+  flutter_barcode_scanner: ^2.0.0
   flutter_native_splash: ^2.1.6
   flutter_svg: ^1.0.3
   get: 4.6.1

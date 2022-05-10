@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import 'package:presensi/app/modules/absen/bindings/absen_binding.dart';
+import 'package:presensi/app/modules/absen/views/absen_view.dart';
+
 import '../modules/add_jadwal/bindings/add_jadwal_binding.dart';
 import '../modules/add_jadwal/views/add_jadwal_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -87,6 +90,11 @@ class AppPages {
       name: _Paths.UPDATE_PASSWORD,
       page: () => UpdatePasswordView(),
       binding: UpdatePasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.ABSEN,
+      page: () => AbsenView(),
+      binding: AbsenBinding(),
     ),
   ];
 }

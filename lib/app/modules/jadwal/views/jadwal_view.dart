@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -25,7 +27,7 @@ class JadwalView extends GetView<JadwalController> {
           ),
         ],
       ),
-      body: StreamBuilder<QuerySnapshot>(
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: controller.jadwalStream(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -39,6 +41,8 @@ class JadwalView extends GetView<JadwalController> {
               padding: EdgeInsets.all(16),
               itemCount: data.docs.length,
               itemBuilder: (context, index) {
+                Map<String, dynamic> jadwalList = snapshot.data!.docs[index].data();
+                String kode = 'Unknown';
                 return Container(
                   margin: EdgeInsets.only(bottom: 12),
                   padding: EdgeInsets.all(16),
@@ -59,7 +63,7 @@ class JadwalView extends GetView<JadwalController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Praktikum\n${data.docs[index]['praktikum']}',
+                                'Praktikum\n${jadwalList['praktikum']}',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -67,14 +71,14 @@ class JadwalView extends GetView<JadwalController> {
                                 ),
                               ),
                               SizedBox(height: 4),
-                              Text('Kode : ${data.docs[index]['kode']}'),
+                              Text('Kode : ${jadwalList['kode']}'),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Dosen : ${data.docs[index]['dosen']}',
+                                'Dosen : ${jadwalList['dosen']}',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -82,7 +86,7 @@ class JadwalView extends GetView<JadwalController> {
                                 ),
                               ),
                               Text(
-                                'Ruang : ${data.docs[index]['ruang']}',
+                                'Ruang : ${jadwalList['ruang']}',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -105,7 +109,7 @@ class JadwalView extends GetView<JadwalController> {
                             ),
                             child: Center(
                               child: Text(
-                                data.docs[index]['kelas'],
+                                jadwalList['kelas'],
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 28,
@@ -123,7 +127,19 @@ class JadwalView extends GetView<JadwalController> {
                             ),
                             child: Center(
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  try {
+                                    kode = await FlutterBarcodeScanner.scanBarcode(
+                                        '#34CA74', 'Batal', true, ScanMode.QR);
+                                    if (kode == jadwalList['kode']) {
+                                      Get.offAndToNamed(Routes.ABSEN, arguments: jadwalList);
+                                    } else {
+                                      Get.snackbar('Error', 'Kode tidak dikenali.');
+                                    }
+                                  } on PlatformException {
+                                    print('Failed to get platform version.');
+                                  }
+                                },
                                 icon: Icon(
                                   IconlyLight.scan,
                                   size: 28,

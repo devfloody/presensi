@@ -15,6 +15,7 @@ abstract class Routes {
   static const LUPA_PASSWORD = _Paths.LUPA_PASSWORD;
   static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
   static const UPDATE_PASSWORD = _Paths.UPDATE_PASSWORD;
+  static const ABSEN = _Paths.ABSEN;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const LUPA_PASSWORD = '/lupa-password';
   static const UPDATE_PROFILE = '/update-profile';
   static const UPDATE_PASSWORD = '/update-password';
+  static const ABSEN = '/absen';
 }

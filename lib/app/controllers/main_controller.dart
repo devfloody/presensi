@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 
 import '../routes/app_pages.dart';
@@ -22,7 +26,21 @@ class MainController extends GetxController {
     }
   }
 
-  void absen() {
-    
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> jadwalStream() async* {
+    String uid = await auth.currentUser!.uid;
+    yield* db.collection('pengguna').doc(uid).collection('jadwal').snapshots();
+  }
+
+  String kode = 'Unknown';
+  Future absen() async {
+    try {
+      kode = await FlutterBarcodeScanner.scanBarcode('#34CA74', 'Batal', true, ScanMode.QR);
+      print(kode);
+    } on PlatformException {
+      print('Failed to get platform version.');
+    }
   }
 }

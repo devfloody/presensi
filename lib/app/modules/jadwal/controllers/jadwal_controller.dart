@@ -6,7 +6,7 @@ class JadwalController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  Stream<QuerySnapshot> jadwalStream() async* {
+  Stream<QuerySnapshot<Map<String, dynamic>>> jadwalStream() async* {
     String uid = await auth.currentUser!.uid;
     yield* db.collection('pengguna').doc(uid).collection('jadwal').snapshots();
   }
