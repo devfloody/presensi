@@ -46,7 +46,7 @@ class JadwalView extends GetView<JadwalController> {
                 return Container(
                   margin: EdgeInsets.only(bottom: 12),
                   padding: EdgeInsets.all(16),
-                  height: 160,
+                  height: 175,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: CustomColor.lightGrey),
@@ -87,6 +87,14 @@ class JadwalView extends GetView<JadwalController> {
                               ),
                               Text(
                                 'Ruang : ${jadwalList['ruang']}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                              Text(
+                                'Praktikan : ${jadwalList['jml_mhs']} mahasiswa',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,

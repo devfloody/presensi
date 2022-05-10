@@ -16,15 +16,15 @@ class AbsenController extends GetxController {
     if (hadirCtrl.text.isNotEmpty && kodeCtrl.text.isNotEmpty) {
       isLoading.value = true;
       String uid = await auth.currentUser!.uid;
-      String tanggal = DateFormat.yMd().format(DateTime.now());
-      String todayId = tanggal.replaceAll('/', '-');
-      String jamMasuk = DateFormat.jm().format(DateTime.now());
+      String tanggal = DateFormat.yMMMMEEEEd().format(DateTime.now());
+      String jamMasuk = DateFormat.Hm().format(DateTime.now());
+      String absenId = jamMasuk.replaceAll(':', '-').split(' ').first;
 
       try {
         isLoading.value = false;
-        await db.collection('pengguna').doc(uid).collection('data_absen').doc(todayId).set({
+        await db.collection('pengguna').doc(uid).collection('data_absen').doc(absenId).set({
           'kode': jadwalList['kode'],
-          'tanggal': tanggal,
+          'tanggal': '$tanggal $jamMasuk',
           'jam_masuk': jamMasuk,
           'jumlah_hadir': int.parse(hadirCtrl.text),
           'jumlah_tidak_hadir': jadwalList['jml_mhs'] - int.parse(hadirCtrl.text),
