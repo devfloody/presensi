@@ -15,4 +15,14 @@ class HomeController extends GetxController {
     String uid = await auth.currentUser!.uid;
     yield* db.collection('pengguna').doc(uid).collection('jadwal').snapshots();
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> absenStream() async* {
+    String uid = await auth.currentUser!.uid;
+    yield* db
+        .collection('pengguna')
+        .doc(uid)
+        .collection('data_absen')
+        .orderBy('tanggal')
+        .snapshots();
+  }
 }

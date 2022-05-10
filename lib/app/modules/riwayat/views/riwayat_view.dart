@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,19 +10,144 @@ import '../controllers/riwayat_controller.dart';
 
 class RiwayatView extends GetView<RiwayatController> {
   final mainCtrl = Get.find<MainController>();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('RiwayatView'),
+        title: Text('Riwayat Kehadiran'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text(
-          'RiwayatView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: controller.absenStream(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasData) {
+            final data = snapshot.requireData;
+            return ListView.builder(
+              padding: EdgeInsets.all(16),
+              itemCount: data.docs.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> absenList = snapshot.data!.docs[index].data();
+                return Container(
+                  margin: EdgeInsets.only(bottom: 12),
+                  padding: EdgeInsets.all(16),
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: CustomColor.lightGrey),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Praktikum\n${absenList['praktikum']}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                '${absenList['tanggal']} WIB',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Praktikan hadir : ${absenList['jumlah_hadir']} mahasiswa',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: CustomColor.success,
+                                ),
+                              ),
+                              Text(
+                                'Praktikan tidak hadir : ${absenList['jumlah_tidak_hadir']} mahasiswa',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: CustomColor.error,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Dosen : ${absenList['dosen']}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                              Text(
+                                'Ruang : ${absenList['ruang']}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: CustomColor.primary,
+                            ),
+                            child: Center(
+                              child: Text(
+                                absenList['kelas'],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 28,
+                                  color: CustomColor.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+          return Center(
+            child: Text('Belum ada data absen.'),
+          );
+        },
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(

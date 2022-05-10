@@ -24,7 +24,7 @@ class AbsenController extends GetxController {
         isLoading.value = false;
         await db.collection('pengguna').doc(uid).collection('data_absen').doc(absenId).set({
           'kode': jadwalList['kode'],
-          'tanggal': '$tanggal $jamMasuk',
+          'tanggal': '$tanggal - $jamMasuk',
           'jam_masuk': jamMasuk,
           'jumlah_hadir': int.parse(hadirCtrl.text),
           'jumlah_tidak_hadir': jadwalList['jml_mhs'] - int.parse(hadirCtrl.text),

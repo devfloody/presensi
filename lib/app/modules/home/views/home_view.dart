@@ -272,7 +272,7 @@ class HomeView extends GetView<HomeController> {
             height: 280,
             width: double.infinity,
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: controller.jadwalStream(),
+              stream: controller.absenStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -283,7 +283,7 @@ class HomeView extends GetView<HomeController> {
                   final jadwal = snapshot.requireData;
                   return ListView.builder(
                     itemBuilder: (context, index) {
-                      Map<String, dynamic> jadwalList = snapshot.data!.docs[index].data();
+                      Map<String, dynamic> absenList = snapshot.data!.docs[index].data();
                       return Container(
                         margin: EdgeInsets.only(right: 12),
                         padding: EdgeInsets.all(16),
@@ -303,7 +303,7 @@ class HomeView extends GetView<HomeController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  jadwalList['praktikum'],
+                                  absenList['praktikum'],
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -311,7 +311,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                                 Text(
-                                  'Ruang ${jadwalList['ruang']}',
+                                  '${absenList['tanggal']}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -329,7 +329,7 @@ class HomeView extends GetView<HomeController> {
                               ),
                               child: Center(
                                 child: Text(
-                                  jadwalList['kelas'],
+                                  absenList['kelas'],
                                   style: TextStyle(
                                     fontSize: 48,
                                     fontWeight: FontWeight.w500,
