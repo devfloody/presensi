@@ -22,7 +22,7 @@ class HomeController extends GetxController {
         .collection('pengguna')
         .doc(uid)
         .collection('data_absen')
-        .orderBy('tanggal')
+        .orderBy('tanggal', descending: true)
         .snapshots();
   }
 }
