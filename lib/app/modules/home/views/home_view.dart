@@ -18,305 +18,343 @@ class HomeView extends GetView<HomeController> {
         title: Text('Beranda'),
         centerTitle: true,
       ),
-      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-          stream: controller.streamUser(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.hasData) {
-              Map<String, dynamic> user = snapshot.data!.data()!;
-              String defaultImage =
-                  'https://ui-avatars.com/api/?name=${user['name']}&background=FFAF5A';
-              return ListView(
-                padding: EdgeInsets.all(16),
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    height: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: CustomColor.primary,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+            stream: controller.streamUser(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: CustomColor.lightGrey),
+                  ),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              if (snapshot.hasData) {
+                Map<String, dynamic> user = snapshot.data!.data()!;
+                String defaultImage =
+                    'https://ui-avatars.com/api/?name=${user['name']}&background=FFAF5A';
+
+                return Container(
+                  padding: EdgeInsets.all(16),
+                  height: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: CustomColor.lightGrey),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hello,',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: CustomColor.primary,
+                            ),
+                          ),
+                          Text(
+                            '${user['name']}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: CustomColor.primary,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            '${user['nim_or_nik']}',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: CustomColor.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      ClipOval(
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          child: Image.network(
+                            user['photoURL'] != null ? user['photoURL'] : defaultImage,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return Text('Tidak dapat memuat data');
+            },
+          ),
+          SizedBox(height: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Jadwal Praktikum',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: CustomColor.black,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.offAllNamed(Routes.JADWAL);
+                },
+                child: Text('Lihat Semua'),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          SizedBox(
+            height: 280,
+            width: double.infinity,
+            child: StreamBuilder<QuerySnapshot>(
+              stream: controller.jadwalStream(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasData) {
+                  final jadwal = snapshot.requireData;
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.all(16),
+                        width: 230,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: CustomColor.white,
+                          border: Border.all(
+                            color: CustomColor.lightGrey,
+                          ),
+                        ),
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Hello,',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: CustomColor.white,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  jadwal.docs[index]['praktikum'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: CustomColor.black,
+                                  ),
+                                ),
+                                Text(
+                                  'Ruang ${jadwal.docs[index]['ruang']}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 120,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: CustomColor.primary,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  jadwal.docs[index]['kelas'],
+                                  style: TextStyle(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.w500,
+                                    color: CustomColor.white,
+                                  ),
+                                ),
                               ),
                             ),
-                            Text(
-                              '${user['name']}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: CustomColor.white,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              '${user['nim_or_nik']}',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: CustomColor.white,
+                            SizedBox(
+                              height: 40,
+                              width: 100,
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  backgroundColor: CustomColor.secondary,
+                                  primary: CustomColor.black,
+                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Absen',
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                    Icon(
+                                      IconlyBold.scan,
+                                      size: 22,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        ClipOval(
-                          child: Container(
-                            height: 80,
-                            width: 80,
-                            child: Image.network(
-                              user['photoURL'] != null ? user['photoURL'] : defaultImage,
-                              fit: BoxFit.cover,
-                            ),
+                      );
+                    },
+                    itemCount: jadwal.docs.length < 5 ? jadwal.docs.length : 5,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                  );
+                }
+                return Center(
+                  child: Text('Tidak ada data'),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Riwayat Praktikum',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: CustomColor.black,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.offAllNamed(Routes.RIWAYAT);
+                },
+                child: Text('Lihat Semua'),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          SizedBox(
+            height: 280,
+            width: double.infinity,
+            child: StreamBuilder<QuerySnapshot>(
+              stream: controller.jadwalStream(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasData) {
+                  final jadwal = snapshot.requireData;
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.all(16),
+                        width: 230,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: CustomColor.white,
+                          border: Border.all(
+                            color: CustomColor.lightGrey,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Jadwal Praktikum',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: CustomColor.black,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Get.offAllNamed(Routes.JADWAL);
-                        },
-                        child: Text('Lihat Semua'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    height: 240,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(right: 12),
-                          padding: EdgeInsets.all(16),
-                          width: 180,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: CustomColor.white,
-                            border: Border.all(
-                              color: CustomColor.lightGrey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  jadwal.docs[index]['praktikum'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: CustomColor.black,
+                                  ),
+                                ),
+                                Text(
+                                  'Ruang ${jadwal.docs[index]['ruang']}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.grey,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Dasar Elektronika',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: CustomColor.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Ruang Elektronika',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: CustomColor.grey,
-                                    ),
-                                  ),
-                                ],
+                            Container(
+                              height: 120,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: CustomColor.lightGrey,
                               ),
-                              Container(
-                                height: 100,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: CustomColor.primary,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'A',
-                                    style: TextStyle(
-                                      fontSize: 48,
-                                      fontWeight: FontWeight.w500,
-                                      color: CustomColor.white,
-                                    ),
+                              child: Center(
+                                child: Text(
+                                  jadwal.docs[index]['kelas'],
+                                  style: TextStyle(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.w500,
+                                    color: CustomColor.black,
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 30,
-                                width: 80,
-                                child: TextButton(
-                                  onPressed: () {},
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: CustomColor.secondary,
-                                    primary: CustomColor.black,
-                                    padding: EdgeInsets.all(4),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Masuk',
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                      Icon(
-                                        IconlyLight.arrow_right_2,
-                                        size: 18,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      itemCount: 5,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Riwayat Praktikum',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: CustomColor.black,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Get.offAllNamed(Routes.RIWAYAT);
-                        },
-                        child: Text('Lihat Semua'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    height: 240,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(right: 12),
-                          padding: EdgeInsets.all(16),
-                          width: 180,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: CustomColor.white,
-                            border: Border.all(
-                              color: CustomColor.lightGrey,
                             ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Dasar Elektronika',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: CustomColor.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Ruang Elektronika',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: CustomColor.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                height: 100,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: CustomColor.lightGrey,
+                            SizedBox(
+                              height: 40,
+                              width: 100,
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  backgroundColor: CustomColor.lightGrey,
+                                  primary: CustomColor.black,
+                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    'A',
-                                    style: TextStyle(
-                                      fontSize: 48,
-                                      fontWeight: FontWeight.w500,
-                                      color: CustomColor.black,
-                                    ),
-                                  ),
+                                child: Text(
+                                  'Selesai',
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ),
-                              SizedBox(
-                                height: 30,
-                                width: 80,
-                                child: TextButton(
-                                  onPressed: () {},
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: CustomColor.lightGrey,
-                                    primary: CustomColor.black,
-                                    padding: EdgeInsets.all(4),
-                                  ),
-                                  child: Text(
-                                    'Selesai',
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      itemCount: 5,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              return Center(
-                child: Text('Data tidak ditemukan', style: Theme.of(context).textTheme.headline5),
-              );
-            }
-          }),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    itemCount: jadwal.docs.length < 5 ? jadwal.docs.length : 5,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                  );
+                }
+                return Center(
+                  child: Text('Tidak ada data'),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           backgroundColor: CustomColor.primary,

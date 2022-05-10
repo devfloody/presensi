@@ -8,7 +8,11 @@ class HomeController extends GetxController {
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
     String uid = await auth.currentUser!.uid;
-
     yield* db.collection('pengguna').doc(uid).snapshots();
+  }
+
+  Stream<QuerySnapshot> jadwalStream() async* {
+    String uid = await auth.currentUser!.uid;
+    yield* db.collection('pengguna').doc(uid).collection('jadwal').snapshots();
   }
 }

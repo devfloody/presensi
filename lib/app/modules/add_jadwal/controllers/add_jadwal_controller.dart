@@ -29,7 +29,7 @@ class AddJadwalController extends GetxController {
         isLoading.value = false;
         await db.collection('pengguna').doc(uid).collection('jadwal').doc(jadwalId).set({
           'praktikum': praktCtrl.text,
-          'kode': kodeCtrl.text,
+          'kode': jadwalId,
           'kelas': kelasCtrl.text,
           'dosen': dosenCtrl.text,
           'ruang': ruangCtrl.text,
