@@ -127,6 +127,16 @@ class AddJadwalView extends GetView<AddJadwalController> {
               ),
             ),
           ),
+          SizedBox(height: 16),
+          Center(
+            child: Text(
+              '* Pastikan data yang anda masukan sudah benar.',
+              style: TextStyle(
+                color: CustomColor.error,
+                fontSize: 12,
+              ),
+            ),
+          ),
         ],
       ),
     );
