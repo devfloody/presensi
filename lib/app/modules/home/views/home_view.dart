@@ -123,20 +123,39 @@ class HomeView extends GetView<HomeController> {
             ],
           ),
           SizedBox(height: 16),
-          SizedBox(
-            height: 280,
-            width: double.infinity,
-            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: controller.jadwalStream(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: controller.jadwalStream(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  height: 280,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: CustomColor.lightGrey),
+                  ),
+                  child: Center(
                     child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              if (snapshot.hasData) {
+                final data = snapshot.requireData;
+                if (data.size == 0) {
+                  return Center(
+                    child: Text(
+                      'Belum ada jadwal praktikum.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: CustomColor.black,
+                      ),
+                    ),
                   );
                 }
-                if (snapshot.hasData) {
-                  final data = snapshot.requireData;
-                  return ListView.builder(
+                return SizedBox(
+                  height: 280,
+                  width: double.infinity,
+                  child: ListView.builder(
                     itemBuilder: (context, index) {
                       Map<String, dynamic> jadwalList = snapshot.data!.docs[index].data();
                       String kode = 'Unknown';
@@ -240,13 +259,14 @@ class HomeView extends GetView<HomeController> {
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
-                  );
-                }
-                return Center(
-                  child: Text('Tidak ada data'),
+                  ),
                 );
-              },
-            ),
+              } else {
+                return Center(
+                  child: Text('Belum ada data jadwal.'),
+                );
+              }
+            },
           ),
           SizedBox(height: 24),
           Row(
@@ -270,20 +290,39 @@ class HomeView extends GetView<HomeController> {
             ],
           ),
           SizedBox(height: 16),
-          SizedBox(
-            height: 280,
-            width: double.infinity,
-            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: controller.absenStream(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: controller.absenStream(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  height: 280,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: CustomColor.lightGrey),
+                  ),
+                  child: Center(
                     child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              if (snapshot.hasData) {
+                final data = snapshot.requireData;
+                if (data.size == 0) {
+                  return Center(
+                    child: Text(
+                      'Belum ada riwayat pelaksanaan praktikum.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: CustomColor.black,
+                      ),
+                    ),
                   );
                 }
-                if (snapshot.hasData) {
-                  final jadwal = snapshot.requireData;
-                  return ListView.builder(
+                return SizedBox(
+                  height: 280,
+                  width: double.infinity,
+                  child: ListView.builder(
                     itemBuilder: (context, index) {
                       Map<String, dynamic> absenList = snapshot.data!.docs[index].data();
                       return Container(
@@ -360,17 +399,17 @@ class HomeView extends GetView<HomeController> {
                         ),
                       );
                     },
-                    itemCount: jadwal.docs.length < 5 ? jadwal.docs.length : 5,
+                    itemCount: data.docs.length < 5 ? data.docs.length : 5,
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
-                  );
-                }
-                return Center(
-                  child: Text('Tidak ada data'),
+                  ),
                 );
-              },
-            ),
+              }
+              return Center(
+                child: Text('Belum ada data jadwal.'),
+              );
+            },
           ),
         ],
       ),

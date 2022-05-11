@@ -49,6 +49,19 @@ class JadwalView extends GetView<JadwalController> {
               }
               if (snapshot.hasData) {
                 final data = snapshot.requireData;
+                if (data.size == 0) {
+                  return Center(
+                    child: Text(
+                      'Belum ada jadwal praktikum, tambahkan jadwal terlebih dahulu.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: CustomColor.black,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
                 return ListView.builder(
                   itemCount: data.docs.length,
                   shrinkWrap: true,
@@ -177,8 +190,10 @@ class JadwalView extends GetView<JadwalController> {
                   },
                 );
               } else {
-                return Center(
-                  child: Text('Tidak ada data jadwal'),
+                return Container(
+                  child: Center(
+                    child: Text('Belum ada data jadwal.'),
+                  ),
                 );
               }
             },

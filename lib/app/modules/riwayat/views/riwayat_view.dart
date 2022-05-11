@@ -28,6 +28,19 @@ class RiwayatView extends GetView<RiwayatController> {
           }
           if (snapshot.hasData) {
             final data = snapshot.requireData;
+            print(data.size);
+            if (data.size == 0) {
+              return Center(
+                child: Text(
+                  'Belum ada data absen.',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: CustomColor.black,
+                  ),
+                ),
+              );
+            }
             return ListView.builder(
               padding: EdgeInsets.all(16),
               itemCount: data.docs.length,
@@ -143,10 +156,17 @@ class RiwayatView extends GetView<RiwayatController> {
                 );
               },
             );
+          } else {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: CustomColor.lightGrey),
+              ),
+              child: Center(
+                child: Text('Belum ada data absen.'),
+              ),
+            );
           }
-          return Center(
-            child: Text('Belum ada data absen.'),
-          );
         },
       ),
       bottomNavigationBar: NavigationBarTheme(
