@@ -11,6 +11,7 @@ class LoginController extends GetxController {
   TextEditingController passCtrl = TextEditingController();
 
   RxBool isLoading = false.obs;
+  RxBool isHiding = true.obs;
 
   FirebaseAuth auth = FirebaseAuth.instance;
 

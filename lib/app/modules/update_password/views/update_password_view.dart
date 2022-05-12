@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:iconly/iconly.dart';
 
 import '../../../config/theme.dart';
 import '../controllers/update_password_controller.dart';
@@ -16,51 +17,86 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
       body: ListView(
         padding: EdgeInsets.all(20),
         children: [
-          TextField(
-            controller: controller.currentPassCtrl,
-            autocorrect: false,
-            obscureText: true,
-            decoration: InputDecoration(
-              hintText: 'Password Lama',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
+          Obx(
+            () => TextField(
+              controller: controller.currentPassCtrl,
+              autocorrect: false,
+              obscureText: controller.isHiding.value ? true : false,
+              decoration: InputDecoration(
+                hintText: 'Password Lama',
+                contentPadding: EdgeInsets.all(16),
+                hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+                fillColor: CustomColor.lightGrey,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: InkWell(
+                  onTap: () {
+                    controller.isHiding.value = !controller.isHiding.value;
+                  },
+                  child: Icon(
+                    controller.isHiding.value ? IconlyLight.hide : IconlyLight.show,
+                    color: CustomColor.grey,
+                  ),
+                ),
               ),
             ),
           ),
           SizedBox(height: 16),
-          TextField(
-            controller: controller.newPassCtrl,
-            autocorrect: false,
-            decoration: InputDecoration(
-              hintText: 'Password Baru',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
+          Obx(
+            () => TextField(
+              controller: controller.newPassCtrl,
+              autocorrect: false,
+              obscureText: controller.isHiding.value ? true : false,
+              decoration: InputDecoration(
+                hintText: 'Password Baru',
+                contentPadding: EdgeInsets.all(16),
+                hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+                fillColor: CustomColor.lightGrey,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: InkWell(
+                  onTap: () {
+                    controller.isHiding.value = !controller.isHiding.value;
+                  },
+                  child: Icon(
+                    controller.isHiding.value ? IconlyLight.hide : IconlyLight.show,
+                    color: CustomColor.grey,
+                  ),
+                ),
               ),
             ),
           ),
           SizedBox(height: 16),
-          TextField(
-            controller: controller.confirmPassCtrl,
-            autocorrect: false,
-            decoration: InputDecoration(
-              hintText: 'Konfirmasi Password Baru',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
+          Obx(
+            () => TextField(
+              controller: controller.confirmPassCtrl,
+              autocorrect: false,
+              obscureText: controller.isHiding.value ? true : false,
+              decoration: InputDecoration(
+                hintText: 'Konfirmasi Password Baru',
+                contentPadding: EdgeInsets.all(16),
+                hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+                fillColor: CustomColor.lightGrey,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: InkWell(
+                  onTap: () {
+                    controller.isHiding.value = !controller.isHiding.value;
+                  },
+                  child: Icon(
+                    controller.isHiding.value ? IconlyLight.hide : IconlyLight.show,
+                    color: CustomColor.grey,
+                  ),
+                ),
               ),
             ),
           ),

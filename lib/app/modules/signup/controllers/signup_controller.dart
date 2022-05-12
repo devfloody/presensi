@@ -17,6 +17,7 @@ class SignupController extends GetxController {
 
   var isAdmin = false.obs;
   RxBool isLoading = false.obs;
+  RxBool isHiding = true.obs;
 
   void adminToggle(value) {
     isAdmin.value = !isAdmin.value;
@@ -39,10 +40,10 @@ class SignupController extends GetxController {
           String uid = userCredential.user!.uid;
           db.collection('pengguna').doc(uid).set(
             {
-              'name': nameCtrl.text,
-              'email': emailCtrl.text,
-              'password': passCtrl.text,
-              'nim_or_nik': nimornikCtrl.text,
+              'name': nameCtrl.text.trim(),
+              'email': emailCtrl.text.trim(),
+              'password': passCtrl.text.trim(),
+              'nim_or_nik': nimornikCtrl.text.trim(),
               'uid': uid,
               'role': isAdmin.value ? 'Dosen' : 'Asisten',
               'createdAt': FieldValue.serverTimestamp(),

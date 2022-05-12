@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:presensi/app/routes/app_pages.dart';
+import 'package:iconly/iconly.dart';
 
 import '../../../config/theme.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/hero_image.dart';
 import '../controllers/login_controller.dart';
 
@@ -35,18 +35,30 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
             SizedBox(height: 16),
-            TextField(
-              controller: controller.passCtrl,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Password',
-                contentPadding: EdgeInsets.all(16),
-                hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-                fillColor: CustomColor.lightGrey,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
+            Obx(
+              () => TextField(
+                controller: controller.passCtrl,
+                obscureText: controller.isHiding.value ? true : false,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  contentPadding: EdgeInsets.all(16),
+                  hintStyle:
+                      Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+                  fillColor: CustomColor.lightGrey,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide.none,
+                  ),
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      controller.isHiding.value = !controller.isHiding.value;
+                    },
+                    child: Icon(
+                      controller.isHiding.value ? IconlyLight.hide : IconlyLight.show,
+                      color: CustomColor.grey,
+                    ),
+                  ),
                 ),
               ),
             ),
