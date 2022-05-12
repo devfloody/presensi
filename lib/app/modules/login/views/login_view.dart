@@ -55,7 +55,7 @@ class LoginView extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Get.toNamed(Routes.LUPA_PASSWORD),
                   child: Text(
                     'Lupa Password?',
                     style:

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:presensi/app/widgets/custom_toast.dart';
 
 class UpdatePasswordController extends GetxController {
   TextEditingController currentPassCtrl = TextEditingController();
@@ -30,21 +31,23 @@ class UpdatePasswordController extends GetxController {
             'password': newPassCtrl.text.trim(),
           });
           Get.back();
-          Get.snackbar('Berhasil', 'Password berhasil diperbarui, silahkan login ulang.');
+          CustomToast.successToast(
+              'Berhasil', 'Password berhasil diperbarui, silahkan login ulang.');
         } on FirebaseAuthException catch (e) {
           if (e.code == 'wrong-password') {
-            Get.snackbar('Terjadi Kesalahan', 'Password lama salah.');
+            CustomToast.warningToast('Terjadi Kesalahan', 'Password lama salah.');
           } else {
-            Get.snackbar('Terjadi Kesalahan', '${e.code.toLowerCase()}');
+            CustomToast.errorToast('Terjadi Kesalahan', '${e.code.toLowerCase()}');
           }
         } catch (e) {
-          Get.snackbar('Terjadi Kesalahan', 'Tidak dapat mengubah password.');
+          CustomToast.errorToast('Terjadi Kesalahan', 'Tidak dapat mengubah password.');
         }
       } else {
-        Get.snackbar('Terjadi Kesalahan', 'Password baru tidak sama.');
+        CustomToast.warningToast('Terjadi Kesalahan', 'Password baru tidak sama.');
       }
     } else {
-      Get.snackbar('Terjadi Kesalahan', 'Isi password lama dan baru anda terlebih dahulu.');
+      CustomToast.warningToast(
+          'Terjadi Kesalahan', 'Isi password lama dan baru anda terlebih dahulu.');
     }
   }
 }

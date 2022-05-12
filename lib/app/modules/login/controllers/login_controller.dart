@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:presensi/app/widgets/custom_dialog.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../widgets/custom_toast.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
@@ -28,24 +30,44 @@ class LoginController extends GetxController {
             isLoading.value = false;
             Get.offAllNamed(Routes.HOME);
           } else {
-            Get.defaultDialog(
-              title: 'Email Belum Diverifikasi',
-              middleText: 'Silahkan verifikasi email anda.',
+            CustomAlertDialog.appAlert(
+              title: 'Email belum diverifikasi',
+              message: 'Cek email anda untuk melihat email verifikasi.',
+              onConfirm: () async {
+                try {
+                  await userCredential.user!.sendEmailVerification();
+                  Get.back();
+                  CustomToast.successToast(
+                    "Berhasil",
+                    "Email verifikasi telah dikirimkan ke email anda.",
+                  );
+                  isLoading.value = false;
+                } catch (e) {
+                  CustomToast.errorToast(
+                    "Terjadi Kesalahan",
+                    "Tidak dapat mengirim email verifikasi. Penyebab : ${e.toString()}",
+                  );
+                }
+              },
+              onCancel: () => Get.back(),
             );
             isLoading.value = false;
           }
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'wrong-password') {
-          Get.snackbar('Ubah Password', 'Password salah.');
+          isLoading.value = false;
+          CustomToast.warningToast('Password Salah', 'Periksa kembali password anda.');
         } else if (e.code == 'user-not-found') {
-          Get.snackbar('Ubah Email', 'Email tidak terdaftar.');
+          isLoading.value = false;
+          CustomToast.warningToast('Email tidak terdaftar', 'Periksa kembali email anda.');
         }
       } catch (e) {
-        Get.snackbar('Terjadi Kesalahan', 'Login gagal, silahkan coba lagi.');
+        CustomToast.errorToast('Terjadi Kesalahan', 'Login gagal, silahkan coba lagi.');
       }
     } else {
-      Get.snackbar('Terjadi Kesalahan', 'Email dan Password harus diisi.');
+      isLoading.value = false;
+      CustomToast.warningToast('Terjadi Kesalahan', 'Email dan password tidak boleh kosong.');
     }
   }
 }

@@ -66,7 +66,7 @@ class RiwayatView extends GetView<RiwayatController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Praktikum\n${absenList['praktikum']}',
+                                'Prakt. ${absenList['praktikum']}',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class RiwayatView extends GetView<RiwayatController> {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                '${absenList['tanggal']} WIB',
+                                absenList['tanggal'],
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -88,18 +88,26 @@ class RiwayatView extends GetView<RiwayatController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Praktikan hadir : ${absenList['jumlah_hadir']} mahasiswa',
+                                'Kehadiran Mahasiswa :',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                              Text(
+                                '- Hadir : ${absenList['jumlah_hadir']} Mahasiswa',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
                                   color: CustomColor.success,
                                 ),
                               ),
                               Text(
-                                'Praktikan tidak hadir : ${absenList['jumlah_tidak_hadir']} mahasiswa',
+                                '- Tidak Hadir : ${absenList['jumlah_tidak_hadir']} Mahasiswa',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w400,
                                   color: CustomColor.error,
                                 ),
                               ),
@@ -112,7 +120,7 @@ class RiwayatView extends GetView<RiwayatController> {
                                 'Dosen : ${absenList['dosen']}',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   color: CustomColor.black,
                                 ),
                               ),

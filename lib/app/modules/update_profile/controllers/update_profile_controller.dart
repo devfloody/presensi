@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:presensi/app/widgets/custom_toast.dart';
 
 class UpdateProfileController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
@@ -20,13 +21,6 @@ class UpdateProfileController extends GetxController {
 
   void pickImage() async {
     image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      print(image!.path);
-      print(image!.name.split('.').last);
-    } else {
-      print('No image selected');
-    }
     update();
   }
 
@@ -46,9 +40,10 @@ class UpdateProfileController extends GetxController {
         }
         await db.collection('pengguna').doc(uid).update(data);
         Get.back();
-        Get.snackbar('Berhasil', 'Berhasil mengupdate profil');
+        CustomToast.successToast('Berhasil', 'Perubahan profil berhasil disimpan');
       } catch (e) {
         Get.snackbar('Gagal', 'Gagal mengupdate profil');
+        CustomToast.errorToast('Terjadi kesalahan', 'Tidak dapat melakukan perubahan profil');
       } finally {
         isLoading.value = false;
       }
@@ -59,9 +54,9 @@ class UpdateProfileController extends GetxController {
     try {
       await db.collection('pengguna').doc(uid).update({'photoURL': FieldValue.delete()});
       Get.back();
-      Get.snackbar('Berhasil', 'Berhasil menghapus foto profil');
+      CustomToast.successToast('Berhasil', 'Foto profil telah terhapus');
     } catch (e) {
-      Get.snackbar('Gagal', 'Gagal menghapus foto profil');
+      CustomToast.errorToast('Terjadi kesalahan', 'Tidak dapat menghapus foto profil');
     } finally {
       update();
     }

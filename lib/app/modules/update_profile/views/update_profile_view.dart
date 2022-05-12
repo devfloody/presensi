@@ -18,7 +18,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Update Profil'),
+          title: Text('Edit Profil'),
           centerTitle: true,
         ),
         body: ListView(

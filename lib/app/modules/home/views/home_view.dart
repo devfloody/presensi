@@ -4,7 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:presensi/app/controllers/main_controller.dart';
+import 'package:presensi/app/widgets/custom_toast.dart';
 
 import '../../../config/theme.dart';
 import '../../../routes/app_pages.dart';
@@ -15,6 +18,9 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('in_ID', 'Indonesia');
+    String hari = DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
+    mainCtrl.currentIndex.value = 0;
     return Scaffold(
       appBar: AppBar(
         title: Text('Beranda'),
@@ -62,7 +68,7 @@ class HomeView extends GetView<HomeController> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
-                              color: CustomColor.primary,
+                              color: CustomColor.black,
                             ),
                           ),
                           Text(
@@ -70,7 +76,7 @@ class HomeView extends GetView<HomeController> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: CustomColor.primary,
+                              color: CustomColor.black,
                             ),
                           ),
                           SizedBox(height: 20),
@@ -186,7 +192,15 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                                 Text(
-                                  'Ruang ${jadwalList['ruang']}',
+                                  'Hari : ${jadwalList['hari']}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.grey,
+                                  ),
+                                ),
+                                Text(
+                                  'Ruang : ${jadwalList['ruang']}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -222,9 +236,23 @@ class HomeView extends GetView<HomeController> {
                                     kode = await FlutterBarcodeScanner.scanBarcode(
                                         '#34CA74', 'Batal', true, ScanMode.QR);
                                     if (kode == jadwalList['kode']) {
-                                      Get.toNamed(Routes.ABSEN, arguments: jadwalList);
+                                      if (jadwalList['hari'] == hari) {
+                                        Get.toNamed(Routes.ABSEN, arguments: jadwalList);
+                                        CustomToast.successToast(
+                                          'Berhasil',
+                                          'Kode kelas sudah sesuai : ${jadwalList['kode']}',
+                                        );
+                                      } else {
+                                        CustomToast.warningToast(
+                                          'Terjadi Kesalahan',
+                                          'Anda tidak dapat absen karena hari tidak sesuai dengan jadwal',
+                                        );
+                                      }
                                     } else {
-                                      Get.snackbar('Error', 'Kode tidak dikenali.');
+                                      CustomToast.errorToast(
+                                        'Terjadi Kesalahan',
+                                        'Kode praktikum tidak dikenali',
+                                      );
                                     }
                                   } on PlatformException {
                                     print('Failed to get platform version.');
@@ -344,18 +372,18 @@ class HomeView extends GetView<HomeController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  absenList['praktikum'],
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                                Text(
                                   '${absenList['tanggal']}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
+                                    color: CustomColor.black,
+                                  ),
+                                ),
+                                Text(
+                                  absenList['praktikum'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
                                     color: CustomColor.grey,
                                   ),
                                 ),
@@ -379,21 +407,26 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 40,
-                              width: 100,
-                              child: TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(
-                                  backgroundColor: CustomColor.lightGrey,
-                                  primary: CustomColor.black,
-                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Praktikan hadir : ${absenList['jumlah_hadir']} orang',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.grey,
+                                  ),
                                 ),
-                                child: Text(
-                                  'Selesai',
-                                  style: TextStyle(fontSize: 14),
+                                Text(
+                                  'Praktikan tidak hadir : ${absenList['jumlah_tidak_hadir']} orang',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.grey,
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),

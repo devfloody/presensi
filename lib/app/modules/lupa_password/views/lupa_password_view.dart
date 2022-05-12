@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 
@@ -16,6 +17,16 @@ class LupaPasswordView extends GetView<LupaPasswordController> {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
+          SizedBox(
+            width: double.infinity,
+            child: SvgPicture.asset(
+              'assets/svg/forgot_password.svg',
+              height: 180,
+            ),
+          ),
+          SizedBox(height: 24),
+          LupaPasswordTitle(),
+          SizedBox(height: 24),
           TextField(
             controller: controller.emailCtrl,
             decoration: InputDecoration(
@@ -53,6 +64,38 @@ class LupaPasswordView extends GetView<LupaPasswordController> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class LupaPasswordTitle extends StatelessWidget {
+  const LupaPasswordTitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Reset Password',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+            color: CustomColor.black,
+          ),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          'Kami akan mengirimkan anda email untuk mereset password anda',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: CustomColor.grey,
+          ),
+        ),
+      ],
     );
   }
 }

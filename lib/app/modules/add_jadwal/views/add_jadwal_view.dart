@@ -63,6 +63,21 @@ class AddJadwalView extends GetView<AddJadwalController> {
           ),
           SizedBox(height: 16),
           TextField(
+            controller: controller.hariCtrl,
+            decoration: InputDecoration(
+              hintText: 'Hari',
+              contentPadding: EdgeInsets.all(16),
+              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.lightGrey,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+          SizedBox(height: 16),
+          TextField(
             controller: controller.dosenCtrl,
             decoration: InputDecoration(
               hintText: 'Dosen Pengampu',
@@ -130,11 +145,12 @@ class AddJadwalView extends GetView<AddJadwalController> {
           SizedBox(height: 16),
           Center(
             child: Text(
-              '* Pastikan data yang anda masukan sudah benar.',
+              'Catatan : Pastikan data yang anda masukan sudah sesuai dengan data sebenarnya.',
               style: TextStyle(
                 color: CustomColor.error,
                 fontSize: 12,
               ),
+              textAlign: TextAlign.justify,
             ),
           ),
         ],

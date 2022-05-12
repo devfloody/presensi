@@ -7,8 +7,9 @@ class CustomColor {
   static const Color grey = Color(0xFF757575);
   static const Color lightGrey = Color(0xFFE5E5E5);
   static const Color white = Color(0xFFF5F7F9);
-  static const Color success = Color(0xFF34CA74);
-  static const Color error = Color(0xFFFF6905);
+  static const Color success = Color(0xFF16AE26);
+  static const Color error = Color(0xFFD00E0E);
+  static const Color warning = Color(0xFFEB8600);
 }
 
 ThemeData customTheme() {

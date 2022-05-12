@@ -69,7 +69,7 @@ class ProfileView extends GetView<ProfileController> {
                     arguments: user,
                   ),
                   leading: Icon(IconlyBold.profile),
-                  title: Text('Update Profil'),
+                  title: Text('Edit Profil'),
                   iconColor: Color.fromARGB(255, 57, 57, 57),
                   tileColor: CustomColor.lightGrey,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -78,7 +78,7 @@ class ProfileView extends GetView<ProfileController> {
                 ListTile(
                   onTap: () => Get.toNamed(Routes.UPDATE_PASSWORD),
                   leading: Icon(IconlyBold.lock),
-                  title: Text('Update Password'),
+                  title: Text('Ubah Password'),
                   iconColor: CustomColor.black,
                   tileColor: CustomColor.lightGrey,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),

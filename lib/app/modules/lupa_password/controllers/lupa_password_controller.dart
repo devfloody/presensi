@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+import '../../../widgets/custom_toast.dart';
+
 class LupaPasswordController extends GetxController {
   RxBool isLoading = false.obs;
   TextEditingController emailCtrl = TextEditingController();
@@ -13,8 +15,9 @@ class LupaPasswordController extends GetxController {
       isLoading.value = true;
       try {
         await auth.sendPasswordResetEmail(email: emailCtrl.text);
+        CustomToast.successToast('Berhasil', 'Kami sudah mengirimkan email reset password.');
       } catch (e) {
-        Get.snackbar('Terjadi Kesalahan', 'Tidak dapat mengirim email reset password');
+        CustomToast.errorToast('Terjadi Kesalahan', 'Tidak dapat mengirim email reset password');
       } finally {
         isLoading.value = false;
       }

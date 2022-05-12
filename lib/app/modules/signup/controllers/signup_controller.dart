@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:presensi/app/routes/app_pages.dart';
+
+import '../../../routes/app_pages.dart';
+import '../../../widgets/custom_toast.dart';
 
 class SignupController extends GetxController {
   TextEditingController nameCtrl = TextEditingController();
@@ -26,7 +28,7 @@ class SignupController extends GetxController {
         emailCtrl.text.isNotEmpty &&
         passCtrl.text.isNotEmpty &&
         nimornikCtrl.text.isNotEmpty) {
-          isLoading.value = true;
+      isLoading.value = true;
       try {
         UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: emailCtrl.text.trim(),
@@ -48,24 +50,33 @@ class SignupController extends GetxController {
           );
           await userCredential.user!.sendEmailVerification();
         }
-        Get.snackbar('Pendaftaran Berhasil', 'Silahkan login untuk melanjutkan');
+        CustomToast.successToast(
+          'Berhasil',
+          'Berhasil mendaftarkan akun, silahkan verifikasi email anda.',
+        );
         isLoading.value = false;
         Get.offAllNamed(Routes.LOGIN);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           isLoading.value = false;
-          Get.snackbar('Ubah Password', 'Password anda terlalu lemah.');
+          CustomToast.warningToast('Password Lemah', 'Ubah password anda.');
         } else if (e.code == 'email-already-in-use') {
           isLoading.value = false;
-          Get.snackbar('Ubah Email', 'Email yang anda gunakan telah terdaftar.');
+          CustomToast.warningToast(
+            'Email Telah Terdaftar',
+            'Silahkan login atau ganti email anda.',
+          );
         }
       } catch (e) {
         isLoading.value = false;
-        Get.snackbar('Terjadi Kesalahan', 'Pendaftaran gagal, silahkan coba lagi.');
+        CustomToast.errorToast('Terjadi Kesalahan', 'Pendaftaran gagal, silahkan coba lagi.');
       }
     } else {
       isLoading.value = false;
-      Get.snackbar('Terjadi Kesalahan', 'Nama, Email, dan Password harus diisi.');
+      CustomToast.warningToast(
+        'Terjadi Kesalahan',
+        'Nama, Email, NIM/NIK dan Password harus diisi.',
+      );
     }
   }
 }

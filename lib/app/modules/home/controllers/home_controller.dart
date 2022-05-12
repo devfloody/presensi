@@ -21,7 +21,7 @@ class HomeController extends GetxController {
     yield* db
         .collection('pengguna')
         .doc(uid)
-        .collection('data_absen')
+        .collection('data-absen')
         .orderBy('tanggal', descending: true)
         .snapshots();
   }

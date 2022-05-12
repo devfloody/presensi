@@ -5,10 +5,13 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:presensi/app/routes/app_pages.dart';
 
 import '../../../config/theme.dart';
 import '../../../controllers/main_controller.dart';
+import '../../../widgets/custom_toast.dart';
 import '../controllers/jadwal_controller.dart';
 
 class JadwalView extends GetView<JadwalController> {
@@ -16,6 +19,9 @@ class JadwalView extends GetView<JadwalController> {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('in_ID', 'Indonesia');
+    String hari = DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Jadwal'),
@@ -89,7 +95,15 @@ class JadwalView extends GetView<JadwalController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Praktikum\n${jadwalList['praktikum']}',
+                                    jadwalList['hari'],
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: CustomColor.secondary,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Prakt. ${jadwalList['praktikum']}',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
@@ -107,7 +121,7 @@ class JadwalView extends GetView<JadwalController> {
                                     'Dosen : ${jadwalList['dosen']}',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: CustomColor.black,
                                     ),
                                   ),
@@ -166,9 +180,23 @@ class JadwalView extends GetView<JadwalController> {
                                         kode = await FlutterBarcodeScanner.scanBarcode(
                                             '#34CA74', 'Batal', true, ScanMode.QR);
                                         if (kode == jadwalList['kode']) {
-                                          Get.toNamed(Routes.ABSEN, arguments: jadwalList);
+                                          if (jadwalList['hari'] == hari) {
+                                            Get.toNamed(Routes.ABSEN, arguments: jadwalList);
+                                            CustomToast.successToast(
+                                              'Berhasil',
+                                              'Kode kelas sudah sesuai : ${jadwalList['kode']}',
+                                            );
+                                          } else {
+                                            CustomToast.warningToast(
+                                              'Terjadi Kesalahan',
+                                              'Anda tidak dapat absen karena hari tidak sesuai dengan jadwal',
+                                            );
+                                          }
                                         } else {
-                                          Get.snackbar('Error', 'Kode tidak dikenali.');
+                                          CustomToast.errorToast(
+                                            'Terjadi Kesalahan',
+                                            'Kode praktikum tidak dikenali',
+                                          );
                                         }
                                       } on PlatformException {
                                         print('Failed to get platform version.');
