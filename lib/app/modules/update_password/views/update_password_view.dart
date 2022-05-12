@@ -36,7 +36,6 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
           TextField(
             controller: controller.newPassCtrl,
             autocorrect: false,
-            obscureText: true,
             decoration: InputDecoration(
               hintText: 'Password Baru',
               contentPadding: EdgeInsets.all(16),
@@ -53,7 +52,6 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
           TextField(
             controller: controller.confirmPassCtrl,
             autocorrect: false,
-            obscureText: true,
             decoration: InputDecoration(
               hintText: 'Konfirmasi Password Baru',
               contentPadding: EdgeInsets.all(16),
