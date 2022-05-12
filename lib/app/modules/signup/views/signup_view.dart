@@ -129,6 +129,39 @@ class SignupView extends GetView<SignupController> {
                 ),
               ),
             ),
+            SizedBox(height: 8),
+            Obx(
+              () => CheckboxListTile(
+                value: controller.isAgree.value,
+                onChanged: (value) {
+                  controller.agreeToggle(value);
+                  print(value);
+                },
+                activeColor: CustomColor.success,
+                contentPadding: EdgeInsets.all(0),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Setuju dengan syarat dan ketentuan.',
+                      style:
+                          Theme.of(context).textTheme.headline5?.copyWith(color: CustomColor.grey),
+                    ),
+                    InkWell(
+                      onTap: () => Get.toNamed(Routes.EULA),
+                      child: Text(
+                        'Baca syarat dan ketentuan',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            ?.copyWith(color: CustomColor.secondary),
+                      ),
+                    ),
+                  ],
+                ),
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+            ),
           ],
         ),
       ),

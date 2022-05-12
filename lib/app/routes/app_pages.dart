@@ -19,6 +19,7 @@ import '../modules/profile/views/tentang_view.dart';
 import '../modules/riwayat/bindings/riwayat_binding.dart';
 import '../modules/riwayat/views/riwayat_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
+import '../modules/signup/views/eula_view.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/update_password/bindings/update_password_binding.dart';
 import '../modules/update_password/views/update_password_view.dart';
@@ -70,6 +71,10 @@ class AppPages {
     GetPage(
       name: _Paths.TENTANG,
       page: () => TentangView(),
+    ),
+    GetPage(
+      name: _Paths.EULA,
+      page: () => EulaView(),
     ),
     GetPage(
       name: _Paths.ADD_JADWAL,

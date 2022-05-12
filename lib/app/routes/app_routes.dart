@@ -11,6 +11,7 @@ abstract class Routes {
   static const JADWAL = _Paths.JADWAL;
   static const PROFILE = _Paths.PROFILE;
   static const TENTANG = _Paths.TENTANG;
+  static const EULA = _Paths.EULA;
   static const ADD_JADWAL = _Paths.ADD_JADWAL;
   static const LUPA_PASSWORD = _Paths.LUPA_PASSWORD;
   static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
@@ -26,6 +27,7 @@ abstract class _Paths {
   static const JADWAL = '/jadwal';
   static const PROFILE = '/profile';
   static const TENTANG = '/tentang';
+  static const EULA = '/eula';
   static const ADD_JADWAL = '/add-jadwal';
   static const LUPA_PASSWORD = '/lupa-password';
   static const UPDATE_PROFILE = '/update-profile';

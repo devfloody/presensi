@@ -18,9 +18,15 @@ class SignupController extends GetxController {
   var isAdmin = false.obs;
   RxBool isLoading = false.obs;
   RxBool isHiding = true.obs;
+  RxBool isAgree = false.obs;
 
   void adminToggle(value) {
     isAdmin.value = !isAdmin.value;
+    update();
+  }
+
+  void agreeToggle(value) {
+    isAgree.value = !isAgree.value;
     update();
   }
 
@@ -30,47 +36,55 @@ class SignupController extends GetxController {
         passCtrl.text.isNotEmpty &&
         nimornikCtrl.text.isNotEmpty) {
       isLoading.value = true;
-      try {
-        UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-          email: emailCtrl.text.trim(),
-          password: passCtrl.text.trim(),
-        );
-        if (userCredential.user != null) {
-          isLoading.value = false;
-          String uid = userCredential.user!.uid;
-          db.collection('pengguna').doc(uid).set(
-            {
-              'name': nameCtrl.text.trim(),
-              'email': emailCtrl.text.trim(),
-              'password': passCtrl.text.trim(),
-              'nim_or_nik': nimornikCtrl.text.trim(),
-              'uid': uid,
-              'role': isAdmin.value ? 'Dosen' : 'Asisten',
-              'createdAt': FieldValue.serverTimestamp(),
-            },
+      if (isAgree.value != false) {
+        try {
+          UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+            email: emailCtrl.text.trim(),
+            password: passCtrl.text.trim(),
           );
-          await userCredential.user!.sendEmailVerification();
-        }
-        CustomToast.successToast(
-          'Berhasil',
-          'Berhasil mendaftarkan akun, silahkan verifikasi email anda.',
-        );
-        isLoading.value = false;
-        Get.offAllNamed(Routes.LOGIN);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          isLoading.value = false;
-          CustomToast.warningToast('Password Lemah', 'Ubah password anda.');
-        } else if (e.code == 'email-already-in-use') {
-          isLoading.value = false;
-          CustomToast.warningToast(
-            'Email Telah Terdaftar',
-            'Silahkan login atau ganti email anda.',
+          if (userCredential.user != null) {
+            isLoading.value = false;
+            String uid = userCredential.user!.uid;
+            db.collection('pengguna').doc(uid).set(
+              {
+                'name': nameCtrl.text.trim(),
+                'email': emailCtrl.text.trim(),
+                'password': passCtrl.text.trim(),
+                'nim_or_nik': nimornikCtrl.text.trim(),
+                'uid': uid,
+                'role': isAdmin.value ? 'Dosen' : 'Asisten',
+                'createdAt': FieldValue.serverTimestamp(),
+              },
+            );
+            await userCredential.user!.sendEmailVerification();
+          }
+          CustomToast.successToast(
+            'Berhasil',
+            'Berhasil mendaftarkan akun, silahkan verifikasi email anda.',
           );
+          isLoading.value = false;
+          Get.offAllNamed(Routes.LOGIN);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            isLoading.value = false;
+            CustomToast.warningToast('Password Lemah', 'Ubah password anda.');
+          } else if (e.code == 'email-already-in-use') {
+            isLoading.value = false;
+            CustomToast.warningToast(
+              'Email Telah Terdaftar',
+              'Silahkan login atau ganti email anda.',
+            );
+          }
+        } catch (e) {
+          isLoading.value = false;
+          CustomToast.errorToast('Terjadi Kesalahan', 'Pendaftaran gagal, silahkan coba lagi.');
         }
-      } catch (e) {
+      } else {
         isLoading.value = false;
-        CustomToast.errorToast('Terjadi Kesalahan', 'Pendaftaran gagal, silahkan coba lagi.');
+        CustomToast.warningToast(
+          'Peringatan',
+          'Anda harus menyetujui syarat dan ketentuan terlebih dahulu.',
+        );
       }
     } else {
       isLoading.value = false;

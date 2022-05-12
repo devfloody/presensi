@@ -78,7 +78,7 @@ class JadwalView extends GetView<JadwalController> {
                     return Container(
                       margin: EdgeInsets.only(bottom: 12),
                       padding: EdgeInsets.all(16),
-                      height: 175,
+                      height: 200,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: CustomColor.lightGrey),
@@ -161,6 +161,24 @@ class JadwalView extends GetView<JadwalController> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 28,
+                                      color: CustomColor.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.error,
+                                ),
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () => controller.hapusJadwal(jadwalList['kode']),
+                                    icon: Icon(
+                                      IconlyBold.delete,
+                                      size: 28,
                                       color: CustomColor.white,
                                     ),
                                   ),
