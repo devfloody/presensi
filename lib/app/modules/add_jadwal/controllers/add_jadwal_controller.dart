@@ -9,7 +9,6 @@ class AddJadwalController extends GetxController {
   TextEditingController kodeCtrl = TextEditingController();
   TextEditingController kelasCtrl = TextEditingController();
   TextEditingController hariCtrl = TextEditingController();
-  TextEditingController dosenCtrl = TextEditingController();
   TextEditingController ruangCtrl = TextEditingController();
   TextEditingController jmlmhsCtrl = TextEditingController();
 
@@ -22,7 +21,7 @@ class AddJadwalController extends GetxController {
         kodeCtrl.text.isNotEmpty &&
         kelasCtrl.text.isNotEmpty &&
         hariCtrl.text.isNotEmpty &&
-        dosenCtrl.text.isNotEmpty &&
+        initial.value != "Dosen Pengampu" &&
         ruangCtrl.text.isNotEmpty &&
         jmlmhsCtrl.text.isNotEmpty) {
       isLoading.value = true;
@@ -36,7 +35,7 @@ class AddJadwalController extends GetxController {
           'kode': jadwalId.toUpperCase().trim(),
           'kelas': kelasCtrl.text.toUpperCase().trim(),
           'hari': hariCtrl.text.trim(),
-          'dosen': dosenCtrl.text.trim(),
+          'dosen': initial.value,
           'ruang': ruangCtrl.text.trim(),
           'jml_mhs': int.parse(jmlmhsCtrl.text.trim()),
         });
@@ -51,7 +50,7 @@ class AddJadwalController extends GetxController {
     }
   }
 
-  List<String> dosen = [
+  List<String> daftarDosen = [
     "Pratomo Budi Santoso, S.T., M.T",
     "Aris Budiman, S.T., M.T",
     "Abdul Basith, Ir. M.T",
@@ -67,4 +66,11 @@ class AddJadwalController extends GetxController {
     "Rizki Nurilyas Ahmad, S.T., M.T.",
     "Heru Supriyono, S.T., M.Sc., Ph.D",
   ];
+
+  RxString initial = "Dosen Pengampu".obs;
+
+  void changeItem(String? value) {
+    initial.value = value.toString();
+    update();
+  }
 }

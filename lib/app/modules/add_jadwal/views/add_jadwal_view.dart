@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -77,9 +78,11 @@ class AddJadwalView extends GetView<AddJadwalController> {
             ),
           ),
           SizedBox(height: 16),
-          TextField(
-            controller: controller.dosenCtrl,
-            decoration: InputDecoration(
+          DropdownSearch<String>(
+            mode: Mode.MENU,
+            items: controller.daftarDosen,
+            autoValidateMode: AutovalidateMode.onUserInteraction,
+            dropdownSearchDecoration: InputDecoration(
               hintText: 'Dosen Pengampu',
               contentPadding: EdgeInsets.all(16),
               hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
@@ -90,25 +93,11 @@ class AddJadwalView extends GetView<AddJadwalController> {
                 borderSide: BorderSide.none,
               ),
             ),
+            selectedItem: controller.initial.value,
+            onChanged: (value) {
+              controller.changeItem(value);
+            },
           ),
-          // DropdownSearch<String>(
-          //   mode: Mode.MENU,
-          //   items: controller.dosen,
-          //   dropdownSearchDecoration: InputDecoration(
-          //     hintText: 'Dosen Pengampu',
-          //     contentPadding: EdgeInsets.all(16),
-          //     hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-          //     fillColor: CustomColor.lightGrey,
-          //     filled: true,
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.circular(4),
-          //       borderSide: BorderSide.none,
-          //     ),
-          //   ),
-          //   selectedItem: controller.dosen[0],
-          //   onChanged: (value) {  
-          //   },
-          // ),
           SizedBox(height: 16),
           TextField(
             controller: controller.ruangCtrl,
