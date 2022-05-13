@@ -50,4 +50,21 @@ class AddJadwalController extends GetxController {
       CustomToast.warningToast('Terjadi Kesalahan', 'Semua data harus diisi terlebih dahulu');
     }
   }
+
+  List<String> dosen = [
+    "Pratomo Budi Santoso, S.T., M.T",
+    "Aris Budiman, S.T., M.T",
+    "Abdul Basith, Ir. M.T",
+    "Hasyim Asy'ari, S.T., M.T",
+    "Umar , S.T., M.T",
+    "Muhammad Kusban, Dr. S.T., M.T",
+    "Fajar Suryawan, S.T., M.Eng.Sc., Ph.D",
+    "Agus Ulinuha, Dr. M.T.",
+    "Dedi Ary Prasetya, S.T., M.Eng",
+    "Tindyo Prasetyo, S.T, M.T",
+    "Bambang Hari Purwoto, S.T., M.T",
+    "Umi Fadlilah, S.T., M.Eng",
+    "Rizki Nurilyas Ahmad, S.T., M.T.",
+    "Heru Supriyono, S.T., M.Sc., Ph.D",
+  ];
 }
