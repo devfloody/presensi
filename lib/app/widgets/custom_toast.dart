@@ -4,7 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:presensi/app/config/theme.dart';
 
 class CustomToast {
-  static errorToast(String? title, String? message) {
+  static errorToast(String? message) {
     Get.rawSnackbar(
       duration: Duration(seconds: 2),
       dismissDirection: DismissDirection.horizontal,
@@ -23,7 +23,7 @@ class CustomToast {
                 Container(
                   margin: EdgeInsets.only(bottom: 4),
                   child: Text(
-                    title ?? "error",
+                    "Terjadi Kesalahan",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -48,7 +48,7 @@ class CustomToast {
     );
   }
 
-  static warningToast(String? title, String? message) {
+  static warningToast(String? message) {
     Get.rawSnackbar(
       duration: Duration(seconds: 2),
       dismissDirection: DismissDirection.horizontal,
@@ -67,7 +67,7 @@ class CustomToast {
                 Container(
                   margin: EdgeInsets.only(bottom: 4),
                   child: Text(
-                    title ?? "Warning",
+                    "Peringatan",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -92,7 +92,7 @@ class CustomToast {
     );
   }
 
-  static successToast(String? title, String? message) {
+  static successToast(String? message) {
     Get.rawSnackbar(
       duration: Duration(seconds: 2),
       dismissDirection: DismissDirection.horizontal,
@@ -111,7 +111,7 @@ class CustomToast {
                 Container(
                   margin: EdgeInsets.only(bottom: 4),
                   child: Text(
-                    title ?? "Success",
+                    "Berhasil",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,

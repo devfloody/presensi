@@ -40,13 +40,13 @@ class AddJadwalController extends GetxController {
           'jml_mhs': int.parse(jmlmhsCtrl.text.trim()),
         });
         Get.back();
-        CustomToast.successToast('Berhasil', 'Jadwal berhasil ditambahkan');
+        CustomToast.successToast('Jadwal berhasil ditambahkan');
       } catch (e) {
         isLoading.value = false;
-        CustomToast.errorToast('Terjadi Kesalahan', 'Gagal menambahkan jadwal');
+        CustomToast.errorToast('Gagal menambahkan jadwal');
       }
     } else {
-      CustomToast.warningToast('Terjadi Kesalahan', 'Semua data harus diisi terlebih dahulu');
+      CustomToast.warningToast('Semua data harus diisi terlebih dahulu');
     }
   }
 

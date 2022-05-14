@@ -25,6 +25,12 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         title: Text('Beranda'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => controller.logout(),
+            icon: Icon(IconlyLight.logout),
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16),
@@ -239,18 +245,15 @@ class HomeView extends GetView<HomeController> {
                                       if (jadwalList['hari'] == hari) {
                                         Get.toNamed(Routes.ABSEN, arguments: jadwalList);
                                         CustomToast.successToast(
-                                          'Berhasil',
                                           'Kode kelas sudah sesuai : ${jadwalList['kode']}',
                                         );
                                       } else {
                                         CustomToast.warningToast(
-                                          'Terjadi Kesalahan',
                                           'Anda tidak dapat absen karena hari tidak sesuai dengan jadwal',
                                         );
                                       }
                                     } else {
                                       CustomToast.errorToast(
-                                        'Terjadi Kesalahan',
                                         'Kode praktikum tidak dikenali',
                                       );
                                     }

@@ -15,9 +15,9 @@ class LupaPasswordController extends GetxController {
       isLoading.value = true;
       try {
         await auth.sendPasswordResetEmail(email: emailCtrl.text);
-        CustomToast.successToast('Berhasil', 'Kami sudah mengirimkan email reset password.');
+        CustomToast.successToast('Kami sudah mengirimkan email reset password.');
       } catch (e) {
-        CustomToast.errorToast('Terjadi Kesalahan', 'Tidak dapat mengirim email reset password');
+        CustomToast.errorToast('Tidak dapat mengirim email reset password');
       } finally {
         isLoading.value = false;
       }

@@ -201,18 +201,15 @@ class JadwalView extends GetView<JadwalController> {
                                           if (jadwalList['hari'] == hari) {
                                             Get.toNamed(Routes.ABSEN, arguments: jadwalList);
                                             CustomToast.successToast(
-                                              'Berhasil',
                                               'Kode kelas sudah sesuai : ${jadwalList['kode']}',
                                             );
                                           } else {
                                             CustomToast.warningToast(
-                                              'Terjadi Kesalahan',
                                               'Anda tidak dapat absen karena hari tidak sesuai dengan jadwal',
                                             );
                                           }
                                         } else {
                                           CustomToast.errorToast(
-                                            'Terjadi Kesalahan',
                                             'Kode praktikum tidak dikenali',
                                           );
                                         }

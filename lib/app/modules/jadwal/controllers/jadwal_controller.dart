@@ -17,9 +17,9 @@ class JadwalController extends GetxController {
     String uid = await auth.currentUser!.uid;
     try {
       await db.collection('pengguna').doc(uid).collection('jadwal').doc(kode).delete();
-      CustomToast.successToast('Berhasil', 'Jadwal dengan kode: $kode berhasil dihapus');
+      CustomToast.successToast('Jadwal dengan kode: $kode berhasil dihapus');
     } catch (e) {
-      CustomToast.errorToast('Gagal', 'Jadwal gagal dihapus dari daftar. Kode error : $e');
+      CustomToast.errorToast('Jadwal gagal dihapus dari daftar. Kode error : $e');
     } finally {
       update();
     }

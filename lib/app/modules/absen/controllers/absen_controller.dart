@@ -39,17 +39,14 @@ class AbsenController extends GetxController {
           'kelas': jadwalList['kelas'],
         });
         Get.back();
-        CustomToast.successToast('Berhasil', 'Anda berhasil melakukan absensi.');
+        CustomToast.successToast('Anda berhasil melakukan absensi.');
       } catch (e) {
         isLoading.value = false;
-        CustomToast.errorToast('Terjadi Kesalahan', 'Tidak dapat melakukan absen.');
+        CustomToast.errorToast('Tidak dapat melakukan absen.');
       }
     } else {
       isLoading.value = false;
-      CustomToast.warningToast(
-        'Terjadi Kesalahan',
-        'Isi terlebih dahulu jumlah mahasiswa yang hadir.',
-      );
+      CustomToast.warningToast('Isi terlebih dahulu jumlah mahasiswa yang hadir.');
     }
   }
 

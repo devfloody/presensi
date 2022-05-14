@@ -39,13 +39,11 @@ class LoginController extends GetxController {
                   await userCredential.user!.sendEmailVerification();
                   Get.back();
                   CustomToast.successToast(
-                    "Berhasil",
                     "Email verifikasi telah dikirimkan ke email anda.",
                   );
                   isLoading.value = false;
                 } catch (e) {
                   CustomToast.errorToast(
-                    "Terjadi Kesalahan",
                     "Tidak dapat mengirim email verifikasi. Penyebab : ${e.toString()}",
                   );
                 }
@@ -58,17 +56,17 @@ class LoginController extends GetxController {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'wrong-password') {
           isLoading.value = false;
-          CustomToast.warningToast('Password Salah', 'Periksa kembali password anda.');
+          CustomToast.warningToast('Password yang anda masukkan salah, periksa kembali password anda.');
         } else if (e.code == 'user-not-found') {
           isLoading.value = false;
-          CustomToast.warningToast('Email tidak terdaftar', 'Periksa kembali email anda.');
+          CustomToast.warningToast('Email tidak terdaftar, periksa kembali email anda.');
         }
       } catch (e) {
-        CustomToast.errorToast('Terjadi Kesalahan', 'Login gagal, silahkan coba lagi.');
+        CustomToast.errorToast('Login gagal, silahkan coba lagi.');
       }
     } else {
       isLoading.value = false;
-      CustomToast.warningToast('Terjadi Kesalahan', 'Email dan password tidak boleh kosong.');
+      CustomToast.warningToast('Email dan password tidak boleh kosong.');
     }
   }
 }

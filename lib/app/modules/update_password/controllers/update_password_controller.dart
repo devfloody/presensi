@@ -32,23 +32,21 @@ class UpdatePasswordController extends GetxController {
             'password': newPassCtrl.text.trim(),
           });
           Get.back();
-          CustomToast.successToast(
-              'Berhasil', 'Password berhasil diperbarui, silahkan login ulang.');
+          CustomToast.successToast('Password berhasil diperbarui, silahkan login ulang.');
         } on FirebaseAuthException catch (e) {
           if (e.code == 'wrong-password') {
-            CustomToast.warningToast('Terjadi Kesalahan', 'Password lama salah.');
+            CustomToast.warningToast('Password lama salah.');
           } else {
-            CustomToast.errorToast('Terjadi Kesalahan', '${e.code.toLowerCase()}');
+            CustomToast.errorToast('${e.code.toLowerCase()}');
           }
         } catch (e) {
-          CustomToast.errorToast('Terjadi Kesalahan', 'Tidak dapat mengubah password.');
+          CustomToast.errorToast('Tidak dapat mengubah password.');
         }
       } else {
-        CustomToast.warningToast('Terjadi Kesalahan', 'Password baru tidak sama.');
+        CustomToast.warningToast('Password baru tidak sama.');
       }
     } else {
-      CustomToast.warningToast(
-          'Terjadi Kesalahan', 'Isi password lama dan baru anda terlebih dahulu.');
+      CustomToast.warningToast('Isi password lama dan baru anda terlebih dahulu.');
     }
   }
 }

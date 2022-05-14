@@ -59,7 +59,6 @@ class SignupController extends GetxController {
             await userCredential.user!.sendEmailVerification();
           }
           CustomToast.successToast(
-            'Berhasil',
             'Berhasil mendaftarkan akun, silahkan verifikasi email anda.',
           );
           isLoading.value = false;
@@ -67,29 +66,26 @@ class SignupController extends GetxController {
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
             isLoading.value = false;
-            CustomToast.warningToast('Password Lemah', 'Ubah password anda.');
+            CustomToast.warningToast('Password terlalu lemah, ubah password anda.');
           } else if (e.code == 'email-already-in-use') {
             isLoading.value = false;
             CustomToast.warningToast(
-              'Email Telah Terdaftar',
-              'Silahkan login atau ganti email anda.',
+              'Email telah terdaftar. Silahkan login atau ganti email anda.',
             );
           }
         } catch (e) {
           isLoading.value = false;
-          CustomToast.errorToast('Terjadi Kesalahan', 'Pendaftaran gagal, silahkan coba lagi.');
+          CustomToast.errorToast('Pendaftaran gagal, silahkan coba lagi.');
         }
       } else {
         isLoading.value = false;
         CustomToast.warningToast(
-          'Peringatan',
           'Anda harus menyetujui syarat dan ketentuan terlebih dahulu.',
         );
       }
     } else {
       isLoading.value = false;
       CustomToast.warningToast(
-        'Terjadi Kesalahan',
         'Nama, Email, NIM/NIK dan Password harus diisi.',
       );
     }
