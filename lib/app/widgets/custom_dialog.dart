@@ -6,6 +6,9 @@ class CustomAlertDialog {
   static appAlert({
     required String title,
     required String message,
+    required String confirmText,
+    required String cancelText,
+    required Color confirmColor,
     required void Function() onConfirm,
     required void Function() onCancel,
   }) {
@@ -50,7 +53,7 @@ class CustomAlertDialog {
                   child: ElevatedButton(
                     onPressed: onCancel,
                     child: Text(
-                      "Batal",
+                      cancelText,
                       style: TextStyle(color: CustomColor.grey),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -66,9 +69,9 @@ class CustomAlertDialog {
                   flex: 6,
                   child: ElevatedButton(
                     onPressed: onConfirm,
-                    child: Text("Kirim Ulang"),
+                    child: Text(confirmText),
                     style: ElevatedButton.styleFrom(
-                      primary: CustomColor.primary,
+                      primary: confirmColor,
                       padding: EdgeInsets.symmetric(vertical: 12),
                       elevation: 0,
                     ),

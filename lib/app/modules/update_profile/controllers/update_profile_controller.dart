@@ -5,7 +5,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:presensi/app/widgets/custom_toast.dart';
+
+import '../../../config/theme.dart';
+import '../../../widgets/custom_dialog.dart';
+import '../../../widgets/custom_toast.dart';
 
 class UpdateProfileController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
@@ -49,15 +52,25 @@ class UpdateProfileController extends GetxController {
     }
   }
 
-  void hapusProfil(String uid) async {
-    try {
-      await db.collection('pengguna').doc(uid).update({'photoURL': FieldValue.delete()});
-      Get.back();
-      CustomToast.successToast('Foto profil telah terhapus');
-    } catch (e) {
-      CustomToast.errorToast('Tidak dapat menghapus foto profil');
-    } finally {
-      update();
-    }
+  void hapusProfil(String uid) {
+    CustomAlertDialog.appAlert(
+      title: 'Hapus Foto Profil',
+      message: 'Apakah anda yakin untuk menghapus foto?',
+      confirmText: 'Hapus',
+      cancelText: 'Batal',
+      confirmColor: CustomColor.error,
+      onConfirm: () async {
+        try {
+          await db.collection('pengguna').doc(uid).update({'photoURL': FieldValue.delete()});
+          Get.back();
+          CustomToast.successToast('Foto profil telah terhapus');
+        } catch (e) {
+          CustomToast.errorToast('Tidak dapat menghapus foto profil');
+        } finally {
+          update();
+        }
+      },
+      onCancel: () => Get.back(),
+    );
   }
 }

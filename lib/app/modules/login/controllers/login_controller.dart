@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:presensi/app/config/theme.dart';
 import 'package:presensi/app/widgets/custom_dialog.dart';
 
 import '../../../routes/app_pages.dart';
@@ -25,8 +26,6 @@ class LoginController extends GetxController {
         );
 
         if (userCredential.user != null) {
-          print(userCredential);
-
           if (userCredential.user!.emailVerified == true) {
             isLoading.value = false;
             Get.offAllNamed(Routes.HOME);
@@ -34,6 +33,9 @@ class LoginController extends GetxController {
             CustomAlertDialog.appAlert(
               title: 'Email belum diverifikasi',
               message: 'Cek email anda untuk melihat email verifikasi.',
+              confirmText: 'Kirim ulang',
+              cancelText: 'Batal',
+              confirmColor: CustomColor.secondary,
               onConfirm: () async {
                 try {
                   await userCredential.user!.sendEmailVerification();

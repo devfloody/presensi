@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:presensi/app/widgets/custom_dialog.dart';
 
+import '../../../config/theme.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_toast.dart';
 
@@ -79,8 +81,18 @@ class SignupController extends GetxController {
         }
       } else {
         isLoading.value = false;
-        CustomToast.warningToast(
-          'Anda harus menyetujui syarat dan ketentuan terlebih dahulu.',
+        CustomAlertDialog.appAlert(
+          title: 'Syarat dan Ketentuan',
+          message: 'Setujui syarat dan ketentuan terlebih dahulu.',
+          confirmText: 'Setuju',
+          cancelText: 'Tidak Setuju',
+          confirmColor: CustomColor.primary,
+          onConfirm: () {
+            isAgree.value = true;
+            update();
+            Get.back();
+          },
+          onCancel: () => Get.back(),
         );
       }
     } else {
