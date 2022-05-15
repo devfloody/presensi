@@ -55,58 +55,74 @@ class HomeView extends GetView<HomeController> {
                 String defaultImage =
                     'https://ui-avatars.com/api/?name=${user['name']}&background=FFAF5A';
 
-                return Container(
-                  padding: EdgeInsets.all(16),
-                  height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: CustomColor.lightGrey),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hello,',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: CustomColor.black,
-                            ),
-                          ),
-                          Text(
-                            '${user['name']}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: CustomColor.black,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            '${user['nim_or_nik']}',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: CustomColor.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                      ClipOval(
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          child: Image.network(
-                            user['photoURL'] != null ? user['photoURL'] : defaultImage,
-                            fit: BoxFit.cover,
+                return InkWell(
+                  onTap: () {
+                    Get.offAllNamed(Routes.PROFILE);
+                    mainCtrl.currentIndex.value = 3;
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    height: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: CustomColor.primary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: CustomColor.black.withOpacity(0.25),
+                          blurRadius: 12,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: Get.width * 0.6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Hello,',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: CustomColor.white,
+                                ),
+                              ),
+                              Text(
+                                '${user['name']}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: CustomColor.white,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                '${user['nim_or_nik']}',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: CustomColor.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        ClipOval(
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            child: Image.network(
+                              user['photoURL'] != null ? user['photoURL'] : defaultImage,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
@@ -134,7 +150,7 @@ class HomeView extends GetView<HomeController> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 12),
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: controller.jadwalStream(),
             builder: (context, snapshot) {
@@ -174,7 +190,7 @@ class HomeView extends GetView<HomeController> {
                       return Container(
                         margin: EdgeInsets.only(right: 12),
                         padding: EdgeInsets.all(16),
-                        width: 230,
+                        width: 200,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: CustomColor.white,
@@ -189,12 +205,21 @@ class HomeView extends GetView<HomeController> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  jadwalList['praktikum'],
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: CustomColor.black,
+                                Container(
+                                  height: 44,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        jadwalList['praktikum'],
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: CustomColor.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Text(
@@ -216,7 +241,7 @@ class HomeView extends GetView<HomeController> {
                               ],
                             ),
                             Container(
-                              height: 120,
+                              height: 90,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -233,7 +258,7 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            Container(
                               height: 40,
                               width: 100,
                               child: TextButton(
@@ -265,18 +290,22 @@ class HomeView extends GetView<HomeController> {
                                   backgroundColor: CustomColor.secondary,
                                   primary: CustomColor.black,
                                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'Absen',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
                                     Icon(
                                       IconlyBold.scan,
                                       size: 22,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Absen',
+                                      style: TextStyle(fontSize: 14),
                                     ),
                                   ],
                                 ),
@@ -320,7 +349,7 @@ class HomeView extends GetView<HomeController> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 12),
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: controller.absenStream(),
             builder: (context, snapshot) {

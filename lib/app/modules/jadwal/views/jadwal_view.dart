@@ -87,63 +87,66 @@ class JadwalView extends GetView<JadwalController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    jadwalList['hari'],
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700,
-                                      color: CustomColor.secondary,
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      jadwalList['hari'],
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: CustomColor.secondary,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Prakt. ${jadwalList['praktikum']}',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: CustomColor.black,
+                                    Text(
+                                      'Prakt. ${jadwalList['praktikum']}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: CustomColor.black,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text('Kode : ${jadwalList['kode']}'),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Dosen : ${jadwalList['dosen']}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: CustomColor.black,
+                                    SizedBox(height: 4),
+                                    Text('Kode : ${jadwalList['kode']}'),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Dosen : ${jadwalList['dosen']}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: CustomColor.black,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Ruang : ${jadwalList['ruang']}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: CustomColor.black,
+                                    Text(
+                                      'Ruang : ${jadwalList['ruang']}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: CustomColor.black,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Praktikan : ${jadwalList['jml_mhs']} mahasiswa',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: CustomColor.black,
+                                    Text(
+                                      'Praktikan : ${jadwalList['jml_mhs']} mahasiswa',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: CustomColor.black,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +221,7 @@ class JadwalView extends GetView<JadwalController> {
                                       }
                                     },
                                     icon: Icon(
-                                      IconlyLight.scan,
+                                      IconlyBold.scan,
                                       size: 28,
                                       color: CustomColor.black,
                                     ),
