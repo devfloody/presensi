@@ -49,7 +49,7 @@ class RiwayatView extends GetView<RiwayatController> {
                 return Container(
                   margin: EdgeInsets.only(bottom: 12),
                   padding: EdgeInsets.all(16),
-                  height: 200,
+                  height: 220,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: CustomColor.lightGrey),
@@ -58,83 +58,86 @@ class RiwayatView extends GetView<RiwayatController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Prakt. ${absenList['praktikum']}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: CustomColor.black,
+                      Container(
+                        width: Get.width * 0.7,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Prakt. ${absenList['praktikum']}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: CustomColor.black,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                absenList['tanggal'],
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: CustomColor.black,
+                                SizedBox(height: 4),
+                                Text(
+                                  absenList['tanggal'],
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.black,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Kehadiran Mahasiswa :',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: CustomColor.black,
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Kehadiran Mahasiswa :',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: CustomColor.black,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '- Hadir : ${absenList['jumlah_hadir']} Mahasiswa',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: CustomColor.success,
+                                Text(
+                                  '- Hadir : ${absenList['jumlah_hadir']} Mahasiswa',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.success,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '- Tidak Hadir : ${absenList['jumlah_tidak_hadir']} Mahasiswa',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: CustomColor.error,
+                                Text(
+                                  '- Tidak Hadir : ${absenList['jumlah_tidak_hadir']} Mahasiswa',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.error,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Dosen : ${absenList['dosen']}',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: CustomColor.black,
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Dosen : ${absenList['dosen']}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: CustomColor.black,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Ruang : ${absenList['ruang']}',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: CustomColor.black,
+                                Text(
+                                  'Ruang : ${absenList['ruang']}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: CustomColor.black,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,

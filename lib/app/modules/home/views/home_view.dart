@@ -190,7 +190,7 @@ class HomeView extends GetView<HomeController> {
                       return Container(
                         margin: EdgeInsets.only(right: 12),
                         padding: EdgeInsets.all(16),
-                        width: 200,
+                        width: 230,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: CustomColor.white,
@@ -411,12 +411,15 @@ class HomeView extends GetView<HomeController> {
                                     color: CustomColor.black,
                                   ),
                                 ),
-                                Text(
-                                  absenList['praktikum'],
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: CustomColor.grey,
+                                Container(
+                                  height: 40,
+                                  child: Text(
+                                    absenList['praktikum'],
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: CustomColor.grey,
+                                    ),
                                   ),
                                 ),
                               ],
