@@ -21,7 +21,7 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
             () => TextField(
               controller: controller.currentPassCtrl,
               autocorrect: false,
-              obscureText: controller.isHiding.value ? true : false,
+              obscureText: controller.isHiding1.value ? true : false,
               decoration: InputDecoration(
                 hintText: 'Password Lama',
                 contentPadding: EdgeInsets.all(16),
@@ -34,10 +34,10 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
                 ),
                 suffixIcon: InkWell(
                   onTap: () {
-                    controller.isHiding.value = !controller.isHiding.value;
+                    controller.isHiding1.value = !controller.isHiding1.value;
                   },
                   child: Icon(
-                    controller.isHiding.value ? IconlyLight.hide : IconlyLight.show,
+                    controller.isHiding1.value ? IconlyLight.hide : IconlyLight.show,
                     color: CustomColor.grey,
                   ),
                 ),
@@ -49,7 +49,7 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
             () => TextField(
               controller: controller.newPassCtrl,
               autocorrect: false,
-              obscureText: controller.isHiding.value ? true : false,
+              obscureText: controller.isHiding2.value ? true : false,
               decoration: InputDecoration(
                 hintText: 'Password Baru',
                 contentPadding: EdgeInsets.all(16),
@@ -62,10 +62,10 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
                 ),
                 suffixIcon: InkWell(
                   onTap: () {
-                    controller.isHiding.value = !controller.isHiding.value;
+                    controller.isHiding2.value = !controller.isHiding2.value;
                   },
                   child: Icon(
-                    controller.isHiding.value ? IconlyLight.hide : IconlyLight.show,
+                    controller.isHiding2.value ? IconlyLight.hide : IconlyLight.show,
                     color: CustomColor.grey,
                   ),
                 ),
@@ -77,7 +77,7 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
             () => TextField(
               controller: controller.confirmPassCtrl,
               autocorrect: false,
-              obscureText: controller.isHiding.value ? true : false,
+              obscureText: controller.isHiding3.value ? true : false,
               decoration: InputDecoration(
                 hintText: 'Konfirmasi Password Baru',
                 contentPadding: EdgeInsets.all(16),
@@ -90,10 +90,10 @@ class UpdatePasswordView extends GetView<UpdatePasswordController> {
                 ),
                 suffixIcon: InkWell(
                   onTap: () {
-                    controller.isHiding.value = !controller.isHiding.value;
+                    controller.isHiding3.value = !controller.isHiding3.value;
                   },
                   child: Icon(
-                    controller.isHiding.value ? IconlyLight.hide : IconlyLight.show,
+                    controller.isHiding3.value ? IconlyLight.hide : IconlyLight.show,
                     color: CustomColor.grey,
                   ),
                 ),

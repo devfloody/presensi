@@ -5,38 +5,39 @@ import 'package:get/get.dart';
 import 'package:presensi/app/widgets/custom_toast.dart';
 
 class AddJadwalController extends GetxController {
-  TextEditingController praktCtrl = TextEditingController();
-  TextEditingController kodeCtrl = TextEditingController();
-  TextEditingController kelasCtrl = TextEditingController();
-  TextEditingController hariCtrl = TextEditingController();
-  TextEditingController ruangCtrl = TextEditingController();
   TextEditingController jmlmhsCtrl = TextEditingController();
 
   RxBool isLoading = false.obs;
+  RxString selectedPraktikum = "Dasar Teknik Digital".obs;
+  RxString selectedKode = "DTD".obs;
+  RxString selectedKelas = "A".obs;
+  RxString selectedDosen = "Pratomo Budi Santoso, S.T., M.T".obs;
+  RxString selectedHari = "Senin".obs;
+  RxString selectedRuang = "Komputer".obs;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future<void> addJadwal() async {
-    if (praktCtrl.text.isNotEmpty &&
-        kodeCtrl.text.isNotEmpty &&
-        kelasCtrl.text.isNotEmpty &&
-        hariCtrl.text.isNotEmpty &&
-        initial.value != "Dosen Pengampu" &&
-        ruangCtrl.text.isNotEmpty &&
+    if (selectedPraktikum.value.isNotEmpty &&
+        selectedKode.value.isNotEmpty &&
+        selectedKelas.value.isNotEmpty &&
+        selectedDosen.value.isNotEmpty &&
+        selectedRuang.value.isNotEmpty &&
+        selectedHari.value.isNotEmpty &&
         jmlmhsCtrl.text.isNotEmpty) {
       isLoading.value = true;
       String uid = await auth.currentUser!.uid;
-      String jadwalId = '${kodeCtrl.text}-${kelasCtrl.text}';
+      String jadwalId = '${selectedKode.value}-${selectedKelas.value}';
 
       try {
         isLoading.value = false;
         await db.collection('pengguna').doc(uid).collection('jadwal').doc(jadwalId).set({
-          'praktikum': praktCtrl.text.trim(),
+          'praktikum': selectedPraktikum.value,
           'kode': jadwalId.toUpperCase().trim(),
-          'kelas': kelasCtrl.text.toUpperCase().trim(),
-          'hari': hariCtrl.text.trim(),
-          'dosen': initial.value,
-          'ruang': ruangCtrl.text.trim(),
+          'kelas': selectedKelas.value,
+          'dosen': selectedDosen.value,
+          'hari': selectedHari.value,
+          'ruang': selectedRuang.value,
           'jml_mhs': int.parse(jmlmhsCtrl.text.trim()),
         });
         Get.back();
@@ -49,6 +50,41 @@ class AddJadwalController extends GetxController {
       CustomToast.warningToast('Semua data harus diisi terlebih dahulu');
     }
   }
+
+  List<String> daftarPraktikum = [
+    "Dasar Teknik Digital",
+    "Dasar Elektronika",
+    "Elektronika Daya",
+    "Dasar Teknik Kendali",
+    "Teknik Pengendalian Mesin Listrik",
+    "Otomasi Industri dan PLC",
+    "Programmable Logic Design",
+  ];
+
+  List<String> daftarKode = [
+    "DTD",
+    "DE",
+    "ELDA",
+    "DTK",
+    "TPML",
+    "PLC",
+    "PLD",
+  ];
+
+  List<String> daftarKelas = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+  ];
 
   List<String> daftarDosen = [
     "Pratomo Budi Santoso, S.T., M.T",
@@ -67,10 +103,18 @@ class AddJadwalController extends GetxController {
     "Heru Supriyono, S.T., M.Sc., Ph.D",
   ];
 
-  RxString initial = "Dosen Pengampu".obs;
+  List<String> daftarHari = [
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu",
+  ];
 
-  void changeItem(String? value) {
-    initial.value = value.toString();
-    update();
-  }
+  List<String> daftarRuang = [
+    "Komputer",
+    "Elektronika",
+    "STL",
+  ];
 }

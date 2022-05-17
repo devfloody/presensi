@@ -10,7 +10,9 @@ class UpdatePasswordController extends GetxController {
   TextEditingController confirmPassCtrl = TextEditingController();
 
   RxBool isLoading = false.obs;
-  RxBool isHiding = true.obs;
+  RxBool isHiding1 = true.obs;
+  RxBool isHiding2 = true.obs;
+  RxBool isHiding3 = true.obs;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
 

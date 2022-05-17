@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:presensi/app/routes/app_pages.dart';
 import 'package:presensi/app/widgets/custom_toast.dart';
 
 class AbsenController extends GetxController {
@@ -38,7 +39,7 @@ class AbsenController extends GetxController {
           'praktikum': jadwalList['praktikum'],
           'kelas': jadwalList['kelas'],
         });
-        Get.back();
+        Get.offAllNamed(Routes.RIWAYAT);
         CustomToast.successToast('Anda berhasil melakukan absensi.');
       } catch (e) {
         isLoading.value = false;

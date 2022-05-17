@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:presensi/app/controllers/main_controller.dart';
-import 'package:presensi/app/widgets/custom_toast.dart';
 
 import '../../../config/theme.dart';
+import '../../../controllers/main_controller.dart';
 import '../../../routes/app_pages.dart';
+import '../../../widgets/custom_toast.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -23,12 +23,24 @@ class HomeView extends GetView<HomeController> {
     mainCtrl.currentIndex.value = 0;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Beranda'),
+        title: Text(
+          'Beranda',
+          style: TextStyle(color: CustomColor.black),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Image.asset('assets/images/mini-icon.png'),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () => controller.logout(),
-            icon: Icon(IconlyLight.logout),
+            icon: Icon(
+              IconlyBold.logout,
+              color: CustomColor.error,
+            ),
           ),
         ],
       ),

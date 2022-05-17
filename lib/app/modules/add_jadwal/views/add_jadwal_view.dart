@@ -1,7 +1,7 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:presensi/app/widgets/custom_toast.dart';
 
 import '../../../config/theme.dart';
 import '../controllers/add_jadwal_controller.dart';
@@ -18,113 +18,193 @@ class AddJadwalView extends GetView<AddJadwalController> {
         padding: EdgeInsets.all(16),
         physics: BouncingScrollPhysics(),
         children: [
-          TextField(
-            controller: controller.praktCtrl,
+          DropdownButtonFormField<String>(
+            value: controller.selectedPraktikum.value,
+            items: controller.daftarPraktikum
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    child: Text(item.toString()),
+                    value: item.toString(),
+                  ),
+                )
+                .toList(),
             decoration: InputDecoration(
-              hintText: 'Nama Praktikum',
+              labelText: 'Nama Praktikum',
               contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
+              labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.white,
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
+                borderSide: BorderSide(
+                  color: CustomColor.grey,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 16),
-          TextField(
-            controller: controller.kodeCtrl,
-            decoration: InputDecoration(
-              hintText: 'Kode Praktikum',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-          SizedBox(height: 16),
-          TextField(
-            controller: controller.kelasCtrl,
-            decoration: InputDecoration(
-              hintText: 'Kelas',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-          SizedBox(height: 16),
-          TextField(
-            controller: controller.hariCtrl,
-            decoration: InputDecoration(
-              hintText: 'Hari',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-          SizedBox(height: 16),
-          DropdownSearch<String>(
-            mode: Mode.MENU,
-            items: controller.daftarDosen,
-            autoValidateMode: AutovalidateMode.onUserInteraction,
-            dropdownSearchDecoration: InputDecoration(
-              hintText: 'Dosen Pengampu',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
-              ),
-            ),
-            selectedItem: controller.initial.value,
             onChanged: (value) {
-              controller.changeItem(value);
+              controller.selectedPraktikum.value = value.toString();
+              CustomToast.successToast('Praktikum : ${controller.selectedPraktikum.value}');
             },
           ),
           SizedBox(height: 16),
-          TextField(
-            controller: controller.ruangCtrl,
+          DropdownButtonFormField<String>(
+            value: controller.selectedKode.value,
+            items: controller.daftarKode
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    child: Text(item.toString()),
+                    value: item.toString(),
+                  ),
+                )
+                .toList(),
             decoration: InputDecoration(
-              hintText: 'Ruang Praktikum',
+              labelText: 'Kode Praktikum',
               contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
+              labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.white,
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
+                borderSide: BorderSide(
+                  color: CustomColor.grey,
+                ),
               ),
             ),
+            onChanged: (value) {
+              controller.selectedKode.value = value.toString();
+              CustomToast.successToast('Kode Praktikum : ${controller.selectedKode.value}');
+            },
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: controller.selectedKelas.value,
+            items: controller.daftarKelas
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    child: Text(item.toString()),
+                    value: item.toString(),
+                  ),
+                )
+                .toList(),
+            decoration: InputDecoration(
+              labelText: 'Kelas',
+              contentPadding: EdgeInsets.all(16),
+              labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide(
+                  color: CustomColor.grey,
+                ),
+              ),
+            ),
+            onChanged: (value) {
+              controller.selectedKelas.value = value.toString();
+              CustomToast.successToast('Kelas : ${controller.selectedKelas.value}');
+            },
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: controller.selectedDosen.value,
+            items: controller.daftarDosen
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    child: Text(item.toString()),
+                    value: item.toString(),
+                  ),
+                )
+                .toList(),
+            decoration: InputDecoration(
+              labelText: 'Dosen Pengampu',
+              contentPadding: EdgeInsets.all(16),
+              labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide(
+                  color: CustomColor.grey,
+                ),
+              ),
+            ),
+            onChanged: (value) {
+              controller.selectedDosen.value = value.toString();
+              CustomToast.successToast('Dosen Pengampu : ${controller.selectedDosen.value}');
+            },
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: controller.selectedRuang.value,
+            items: controller.daftarRuang
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    child: Text(item.toString()),
+                    value: item.toString(),
+                  ),
+                )
+                .toList(),
+            decoration: InputDecoration(
+              labelText: 'Ruang Praktikum',
+              contentPadding: EdgeInsets.all(16),
+              labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide(
+                  color: CustomColor.grey,
+                ),
+              ),
+            ),
+            onChanged: (value) {
+              controller.selectedRuang.value = value.toString();
+              CustomToast.successToast('Ruang : ${controller.selectedRuang.value}');
+            },
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: controller.selectedHari.value,
+            items: controller.daftarHari
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    child: Text(item.toString()),
+                    value: item.toString(),
+                  ),
+                )
+                .toList(),
+            decoration: InputDecoration(
+              labelText: 'Hari',
+              contentPadding: EdgeInsets.all(16),
+              labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide(
+                  color: CustomColor.grey,
+                ),
+              ),
+            ),
+            onChanged: (value) {
+              controller.selectedHari.value = value.toString();
+              CustomToast.successToast('Hari : ${controller.selectedHari.value}');
+            },
           ),
           SizedBox(height: 16),
           TextField(
             controller: controller.jmlmhsCtrl,
             decoration: InputDecoration(
-              hintText: 'Jumlah Mahasiswa',
+              labelText: 'Jumlah Mahasiswa',
               contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              fillColor: CustomColor.lightGrey,
+              labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              fillColor: CustomColor.white,
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
+                borderSide: BorderSide(
+                  color: CustomColor.grey,
+                ),
               ),
             ),
           ),
@@ -152,7 +232,7 @@ class AddJadwalView extends GetView<AddJadwalController> {
           SizedBox(height: 16),
           Center(
             child: Text(
-              'Catatan : Pastikan data yang anda masukan sudah sesuai dengan data sebenarnya.',
+              '* Pastikan data yang anda masukkan sudah benar.',
               style: TextStyle(
                 color: CustomColor.error,
                 fontSize: 12,
