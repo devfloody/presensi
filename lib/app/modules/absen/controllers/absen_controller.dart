@@ -17,33 +17,41 @@ class AbsenController extends GetxController {
 
   Future<void> absen(Map<String, dynamic> jadwalList) async {
     if (hadirCtrl.text.isNotEmpty && kodeCtrl.text.isNotEmpty) {
-      isLoading.value = true;
-      String uid = await auth.currentUser!.uid;
-      initializeDateFormatting('in_ID', 'Indonesia');
-      String hari =
-          DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
-      String tanggal = DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now());
-      String jamMasuk = DateFormat.Hm().format(DateTime.now());
-      String absenId = '$jamMasuk-$hari';
+      if (int.parse(hadirCtrl.text) >= 0) {
+        if (int.parse(hadirCtrl.text) <= jadwalList['jml_mhs']) {
+          isLoading.value = true;
+          String uid = await auth.currentUser!.uid;
+          initializeDateFormatting('in_ID', 'Indonesia');
+          String hari =
+              DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
+          String tanggal = DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now());
+          String jamMasuk = DateFormat.Hm().format(DateTime.now());
+          String absenId = '$jamMasuk-$hari';
 
-      try {
-        isLoading.value = false;
-        await db.collection('pengguna').doc(uid).collection('data-absen').doc(absenId).set({
-          'kode': jadwalList['kode'],
-          'tanggal': '$tanggal - $jamMasuk WIB',
-          'jam_masuk': '$jamMasuk WIB',
-          'jumlah_hadir': int.parse(hadirCtrl.text),
-          'jumlah_tidak_hadir': jadwalList['jml_mhs'] - int.parse(hadirCtrl.text),
-          'dosen': jadwalList['dosen'],
-          'ruang': jadwalList['ruang'],
-          'praktikum': jadwalList['praktikum'],
-          'kelas': jadwalList['kelas'],
-        });
-        Get.offAllNamed(Routes.RIWAYAT);
-        CustomToast.successToast('Anda berhasil melakukan absensi.');
-      } catch (e) {
-        isLoading.value = false;
-        CustomToast.errorToast('Tidak dapat melakukan absen.');
+          try {
+            isLoading.value = false;
+            await db.collection('pengguna').doc(uid).collection('data-absen').doc(absenId).set({
+              'kode': jadwalList['kode'],
+              'tanggal': '$tanggal - $jamMasuk WIB',
+              'jam_masuk': '$jamMasuk WIB',
+              'jumlah_hadir': int.parse(hadirCtrl.text),
+              'jumlah_tidak_hadir': jadwalList['jml_mhs'] - int.parse(hadirCtrl.text),
+              'dosen': jadwalList['dosen'],
+              'ruang': jadwalList['ruang'],
+              'praktikum': jadwalList['praktikum'],
+              'kelas': jadwalList['kelas'],
+            });
+            Get.offAllNamed(Routes.RIWAYAT);
+            CustomToast.successToast('Anda berhasil melakukan absensi.');
+          } catch (e) {
+            isLoading.value = false;
+            CustomToast.errorToast('Tidak dapat melakukan absen.');
+          }
+        }
+      } else if (int.parse(hadirCtrl.text) > jadwalList['jml_mhs']) {
+        CustomToast.warningToast('Jumlah mahasiswa hadir melebihi jumlah mahasiswa yang ada.');
+      } else {
+        CustomToast.warningToast('Jumlah mahasiswa hadir tidak valid.');
       }
     } else {
       isLoading.value = false;
