@@ -141,9 +141,9 @@ class ProfileView extends GetView<ProfileController> {
               selectedIcon: Icon(IconlyBold.home),
             ),
             NavigationDestination(
-              icon: Icon(IconlyLight.graph),
+              icon: Icon(IconlyLight.time_circle),
               label: 'Riwayat',
-              selectedIcon: Icon(IconlyBold.graph),
+              selectedIcon: Icon(IconlyBold.time_circle),
             ),
             NavigationDestination(
               icon: Icon(IconlyLight.calendar),

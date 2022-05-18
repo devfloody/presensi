@@ -74,7 +74,7 @@ class HomeView extends GetView<HomeController> {
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
-                    height: 150,
+                    height: 200,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: CustomColor.primary,
@@ -86,53 +86,114 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ],
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Container(
-                          width: Get.width * 0.6,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Hello,',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: CustomColor.white,
-                                ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: Get.width * 0.6,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Hello,',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: CustomColor.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${user['name']}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomColor.white,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    '${user['nim_or_nik']}',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      color: CustomColor.white,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '${user['name']}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: CustomColor.white,
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Text(
-                                '${user['nim_or_nik']}',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: CustomColor.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        ClipOval(
-                          child: Container(
-                            height: 80,
-                            width: 80,
-                            child: Image.network(
-                              user['photoURL'] != null ? user['photoURL'] : defaultImage,
-                              fit: BoxFit.cover,
                             ),
-                          ),
+                            Center(
+                              child: ClipOval(
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  child: Image.network(
+                                    user['photoURL'] != null ? user['photoURL'] : defaultImage,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                        SizedBox(height: 16),
+                        StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                            stream: controller.absenStream(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: CustomColor.white,
+                                  ),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              }
+                              if (snapshot.hasData) {
+                                final absen = snapshot.requireData;
+                                return Container(
+                                  height: 50,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: CustomColor.white,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Jumlah Kehadiran : ${absen.size} X Pertemuan',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .copyWith(fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return Container(
+                                height: 50,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.white,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Jumlah Kehadiran tidak ditemukan',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              );
+                            }),
                       ],
                     ),
                   ),
@@ -202,7 +263,7 @@ class HomeView extends GetView<HomeController> {
                       return Container(
                         margin: EdgeInsets.only(right: 12),
                         padding: EdgeInsets.all(16),
-                        width: 230,
+                        width: 210,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: CustomColor.white,
@@ -218,22 +279,37 @@ class HomeView extends GetView<HomeController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: 44,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        jadwalList['praktikum'],
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: CustomColor.black,
-                                        ),
+                                  height: 100,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: CustomColor.primary,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      jadwalList['kelas'],
+                                      style: TextStyle(
+                                        fontSize: 48,
+                                        fontWeight: FontWeight.w500,
+                                        color: CustomColor.white,
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
+                                SizedBox(height: 12),
+                                Text(
+                                  jadwalList['praktikum'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: CustomColor.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                 Text(
                                   'Hari : ${jadwalList['hari']}',
                                   style: TextStyle(
@@ -250,78 +326,61 @@ class HomeView extends GetView<HomeController> {
                                     color: CustomColor.grey,
                                   ),
                                 ),
-                              ],
-                            ),
-                            Container(
-                              height: 90,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: CustomColor.primary,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  jadwalList['kelas'],
-                                  style: TextStyle(
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.w500,
-                                    color: CustomColor.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              width: 100,
-                              child: TextButton(
-                                onPressed: () async {
-                                  try {
-                                    kode = await FlutterBarcodeScanner.scanBarcode(
-                                        '#34CA74', 'Batal', true, ScanMode.QR);
-                                    if (kode == jadwalList['kode']) {
-                                      if (jadwalList['hari'] == hari) {
-                                        Get.toNamed(Routes.ABSEN, arguments: jadwalList);
-                                        CustomToast.successToast(
-                                          'Kode kelas sudah sesuai : ${jadwalList['kode']}',
-                                        );
-                                      } else {
-                                        CustomToast.warningToast(
-                                          'Anda tidak dapat absen karena hari tidak sesuai dengan jadwal',
-                                        );
+                                SizedBox(height: 12),
+                                Container(
+                                  height: 40,
+                                  width: 100,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      try {
+                                        kode = await FlutterBarcodeScanner.scanBarcode(
+                                            '#34CA74', 'Batal', true, ScanMode.QR);
+                                        if (kode == jadwalList['kode']) {
+                                          if (jadwalList['hari'] == hari) {
+                                            Get.toNamed(Routes.ABSEN, arguments: jadwalList);
+                                            CustomToast.successToast(
+                                              'Kode kelas sudah sesuai : ${jadwalList['kode']}',
+                                            );
+                                          } else {
+                                            CustomToast.warningToast(
+                                              'Anda tidak dapat absen karena hari tidak sesuai dengan jadwal',
+                                            );
+                                          }
+                                        } else {
+                                          CustomToast.errorToast(
+                                            'Kode praktikum tidak dikenali',
+                                          );
+                                        }
+                                      } on PlatformException {
+                                        print('Failed to get platform version.');
                                       }
-                                    } else {
-                                      CustomToast.errorToast(
-                                        'Kode praktikum tidak dikenali',
-                                      );
-                                    }
-                                  } on PlatformException {
-                                    print('Failed to get platform version.');
-                                  }
-                                },
-                                style: TextButton.styleFrom(
-                                  backgroundColor: CustomColor.secondary,
-                                  primary: CustomColor.black,
-                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    },
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: CustomColor.secondary,
+                                      primary: CustomColor.black,
+                                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          IconlyBold.scan,
+                                          size: 22,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          'Absen',
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      IconlyBold.scan,
-                                      size: 22,
-                                    ),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      'Absen',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
@@ -400,7 +459,7 @@ class HomeView extends GetView<HomeController> {
                       return Container(
                         margin: EdgeInsets.only(right: 12),
                         padding: EdgeInsets.all(16),
-                        width: 230,
+                        width: 210,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           color: CustomColor.white,
@@ -419,38 +478,39 @@ class HomeView extends GetView<HomeController> {
                                   '${absenList['tanggal']}',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w500,
                                     color: CustomColor.black,
                                   ),
                                 ),
+                                SizedBox(height: 12),
                                 Container(
-                                  height: 40,
-                                  child: Text(
-                                    absenList['praktikum'],
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: CustomColor.grey,
+                                  height: 120,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: CustomColor.lightGrey,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      absenList['kelas'],
+                                      style: TextStyle(
+                                        fontSize: 48,
+                                        fontWeight: FontWeight.w500,
+                                        color: CustomColor.black,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                             Container(
-                              height: 120,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: CustomColor.lightGrey,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  absenList['kelas'],
-                                  style: TextStyle(
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.w500,
-                                    color: CustomColor.black,
-                                  ),
+                              height: 40,
+                              child: Text(
+                                absenList['praktikum'],
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: CustomColor.black,
                                 ),
                               ),
                             ),
@@ -460,17 +520,17 @@ class HomeView extends GetView<HomeController> {
                                 Text(
                                   'Praktikan hadir : ${absenList['jumlah_hadir']} orang',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.w400,
-                                    color: CustomColor.grey,
+                                    color: CustomColor.black,
                                   ),
                                 ),
                                 Text(
                                   'Praktikan tidak hadir : ${absenList['jumlah_tidak_hadir']} orang',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.w400,
-                                    color: CustomColor.grey,
+                                    color: CustomColor.black,
                                   ),
                                 ),
                               ],
@@ -522,9 +582,9 @@ class HomeView extends GetView<HomeController> {
               selectedIcon: Icon(IconlyBold.home),
             ),
             NavigationDestination(
-              icon: Icon(IconlyLight.graph),
+              icon: Icon(IconlyLight.time_circle),
               label: 'Riwayat',
-              selectedIcon: Icon(IconlyBold.graph),
+              selectedIcon: Icon(IconlyBold.time_circle),
             ),
             NavigationDestination(
               icon: Icon(IconlyLight.calendar),

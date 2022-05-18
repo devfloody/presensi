@@ -24,7 +24,7 @@ class JadwalView extends GetView<JadwalController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jadwal'),
+        title: Text('Jadwal Praktikum'),
         centerTitle: true,
       ),
       body: ListView(
@@ -83,72 +83,49 @@ class JadwalView extends GetView<JadwalController> {
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: CustomColor.lightGrey),
                       ),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      jadwalList['hari'],
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                        color: CustomColor.secondary,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Prakt. ${jadwalList['praktikum']}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: CustomColor.black,
-                                      ),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text('Kode : ${jadwalList['kode']}'),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Dosen : ${jadwalList['dosen']}',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: CustomColor.black,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Ruang : ${jadwalList['ruang']}',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: CustomColor.black,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Praktikan : ${jadwalList['jml_mhs']} mahasiswa',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: CustomColor.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                jadwalList['hari'],
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: CustomColor.secondary,
+                                ),
+                              ),
+                              Text(
+                                'Prakt. ${jadwalList['praktikum']}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Kode : ${jadwalList['kode']}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                              Text(
+                                'Dosen : ${jadwalList['dosen']}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: CustomColor.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
@@ -183,6 +160,46 @@ class JadwalView extends GetView<JadwalController> {
                                       IconlyBold.delete,
                                       size: 28,
                                       color: CustomColor.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.success,
+                                ),
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.toNamed(Routes.EDIT_JADWAL, arguments: jadwalList);
+                                    },
+                                    icon: Icon(
+                                      IconlyBold.edit,
+                                      size: 28,
+                                      color: CustomColor.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.lightGrey,
+                                ),
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.toNamed(Routes.DETAIL_JADWAL);
+                                    },
+                                    icon: Icon(
+                                      IconlyBold.info_circle,
+                                      size: 28,
+                                      color: CustomColor.black,
                                     ),
                                   ),
                                 ),
@@ -275,9 +292,9 @@ class JadwalView extends GetView<JadwalController> {
               selectedIcon: Icon(IconlyBold.home),
             ),
             NavigationDestination(
-              icon: Icon(IconlyLight.graph),
+              icon: Icon(IconlyLight.time_circle),
               label: 'Riwayat',
-              selectedIcon: Icon(IconlyBold.graph),
+              selectedIcon: Icon(IconlyBold.time_circle),
             ),
             NavigationDestination(
               icon: Icon(IconlyLight.calendar),

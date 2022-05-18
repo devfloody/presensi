@@ -15,7 +15,7 @@ class RiwayatView extends GetView<RiwayatController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Riwayat Kehadiran'),
+        title: Text('Riwayat Praktikum'),
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -28,7 +28,6 @@ class RiwayatView extends GetView<RiwayatController> {
           }
           if (snapshot.hasData) {
             final data = snapshot.requireData;
-            print(data.size);
             if (data.size == 0) {
               return Center(
                 child: Text(
@@ -49,7 +48,7 @@ class RiwayatView extends GetView<RiwayatController> {
                 return Container(
                   margin: EdgeInsets.only(bottom: 12),
                   padding: EdgeInsets.all(16),
-                  height: 220,
+                  height: Get.height * 0.25,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: CustomColor.lightGrey),
@@ -209,9 +208,9 @@ class RiwayatView extends GetView<RiwayatController> {
               selectedIcon: Icon(IconlyBold.home),
             ),
             NavigationDestination(
-              icon: Icon(IconlyLight.graph),
+              icon: Icon(IconlyLight.time_circle),
               label: 'Riwayat',
-              selectedIcon: Icon(IconlyBold.graph),
+              selectedIcon: Icon(IconlyBold.time_circle),
             ),
             NavigationDestination(
               icon: Icon(IconlyLight.calendar),

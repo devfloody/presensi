@@ -4,13 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:presensi/app/routes/app_pages.dart';
-import 'package:presensi/app/widgets/custom_toast.dart';
+
+import '../../../widgets/custom_toast.dart';
 
 class AbsenController extends GetxController {
   RxBool isLoading = false.obs;
   TextEditingController hadirCtrl = TextEditingController();
   TextEditingController kodeCtrl = TextEditingController();
+  TextEditingController materiCtrl = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -24,7 +25,7 @@ class AbsenController extends GetxController {
           initializeDateFormatting('in_ID', 'Indonesia');
           String hari =
               DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
-          String tanggal = DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now());
+          String tanggal = DateFormat('d/M/y', 'in_ID').format(DateTime.now());
           String jamMasuk = DateFormat.Hm().format(DateTime.now());
           String absenId = '$jamMasuk-$hari';
 
@@ -32,7 +33,8 @@ class AbsenController extends GetxController {
             isLoading.value = false;
             await db.collection('pengguna').doc(uid).collection('data-absen').doc(absenId).set({
               'kode': jadwalList['kode'],
-              'tanggal': '$tanggal - $jamMasuk WIB',
+              'hari': hari,
+              'tanggal': tanggal,
               'jam_masuk': '$jamMasuk WIB',
               'jumlah_hadir': int.parse(hadirCtrl.text),
               'jumlah_tidak_hadir': jadwalList['jml_mhs'] - int.parse(hadirCtrl.text),
@@ -40,8 +42,8 @@ class AbsenController extends GetxController {
               'ruang': jadwalList['ruang'],
               'praktikum': jadwalList['praktikum'],
               'kelas': jadwalList['kelas'],
+              'materi': materiCtrl.text,
             });
-            Get.offAllNamed(Routes.RIWAYAT);
             CustomToast.successToast('Anda berhasil melakukan absensi.');
           } catch (e) {
             isLoading.value = false;

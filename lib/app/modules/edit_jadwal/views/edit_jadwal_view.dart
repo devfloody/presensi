@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:presensi/app/controllers/main_controller.dart';
-import 'package:presensi/app/routes/app_pages.dart';
 
 import '../../../config/theme.dart';
-import '../controllers/absen_controller.dart';
+import '../../../widgets/custom_toast.dart';
+import '../controllers/edit_jadwal_controller.dart';
 
-class AbsenView extends GetView<AbsenController> {
-  final Map<String, dynamic> jadwalList = Get.arguments;
-  final mainCtrl = Get.find<MainController>();
-
+class EditJadwalView extends GetView<EditJadwalController> {
+  final Map<String, dynamic> jadwal = Get.arguments;
   @override
   Widget build(BuildContext context) {
-    controller.kodeCtrl.text = jadwalList['kode'];
+    controller.praktCtrl.text = jadwal['praktikum'];
+    controller.kelasCtrl.text = jadwal['kelas'];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Halaman Absen'),
+        title: Text('Edit Jadwal'),
         centerTitle: true,
       ),
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
           TextField(
-            controller: controller.kodeCtrl,
+            controller: controller.praktCtrl,
             readOnly: true,
             decoration: InputDecoration(
-              labelText: 'Kode Kelas',
+              labelText: 'Praktikum',
               contentPadding: EdgeInsets.all(16),
               labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
               fillColor: CustomColor.white,
@@ -41,9 +40,10 @@ class AbsenView extends GetView<AbsenController> {
           ),
           SizedBox(height: 16),
           TextField(
-            controller: controller.hadirCtrl,
+            controller: controller.kelasCtrl,
+            readOnly: true,
             decoration: InputDecoration(
-              labelText: 'Jumlah Mahasiswa Hadir',
+              labelText: 'Kelas',
               contentPadding: EdgeInsets.all(16),
               labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
               fillColor: CustomColor.white,
@@ -57,14 +57,18 @@ class AbsenView extends GetView<AbsenController> {
             ),
           ),
           SizedBox(height: 16),
-          TextField(
-            controller: controller.materiCtrl,
-            minLines: 3,
-            maxLines: 5,
-            maxLength: 500,
-            keyboardType: TextInputType.multiline,
+          DropdownButtonFormField<String>(
+            value: controller.selectedHari.value,
+            items: controller.daftarHari
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    child: Text(item.toString()),
+                    value: item.toString(),
+                  ),
+                )
+                .toList(),
             decoration: InputDecoration(
-              labelText: 'Materi Ajar',
+              labelText: 'Hari',
               contentPadding: EdgeInsets.all(16),
               labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
               fillColor: CustomColor.white,
@@ -76,6 +80,10 @@ class AbsenView extends GetView<AbsenController> {
                 ),
               ),
             ),
+            onChanged: (value) {
+              controller.selectedHari.value = value.toString();
+              CustomToast.successToast('Hari : ${controller.selectedHari.value}');
+            },
           ),
           SizedBox(height: 32),
           Obx(
@@ -84,18 +92,16 @@ class AbsenView extends GetView<AbsenController> {
               width: double.infinity,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: CustomColor.secondary,
+                  backgroundColor: CustomColor.primary,
                 ),
                 onPressed: () async {
                   if (controller.isLoading.isFalse) {
-                    await controller.absen(jadwalList);
-                    Get.offAllNamed(Routes.RIWAYAT);
-                    mainCtrl.currentIndex.value = 1;
+                    await controller.editJadwal(jadwal['kode']);
                   }
                 },
                 child: Text(
-                  controller.isLoading.isFalse ? 'Absen' : 'Loading...',
-                  style: Theme.of(context).textTheme.button,
+                  controller.isLoading.isFalse ? 'Ubah Jadwal' : 'Loading...',
+                  style: Theme.of(context).textTheme.button?.copyWith(color: CustomColor.white),
                 ),
               ),
             ),

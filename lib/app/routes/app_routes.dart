@@ -17,6 +17,9 @@ abstract class Routes {
   static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
   static const UPDATE_PASSWORD = _Paths.UPDATE_PASSWORD;
   static const ABSEN = _Paths.ABSEN;
+  static const EDIT_JADWAL = _Paths.EDIT_JADWAL;
+  static const DETAIL_JADWAL = _Paths.DETAIL_JADWAL;
+  static const DETAIL_ABSENSI = _Paths.DETAIL_ABSENSI;
 }
 
 abstract class _Paths {
@@ -33,4 +36,7 @@ abstract class _Paths {
   static const UPDATE_PROFILE = '/update-profile';
   static const UPDATE_PASSWORD = '/update-password';
   static const ABSEN = '/absen';
+  static const EDIT_JADWAL = '/edit-jadwal';
+  static const DETAIL_JADWAL = '/detail-jadwal';
+  static const DETAIL_ABSENSI = '/detail-absensi';
 }

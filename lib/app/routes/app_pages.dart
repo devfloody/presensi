@@ -2,6 +2,12 @@ import 'package:get/get.dart';
 
 import 'package:presensi/app/modules/absen/bindings/absen_binding.dart';
 import 'package:presensi/app/modules/absen/views/absen_view.dart';
+import 'package:presensi/app/modules/detail_absensi/bindings/detail_absensi_binding.dart';
+import 'package:presensi/app/modules/detail_absensi/views/detail_absensi_view.dart';
+import 'package:presensi/app/modules/detail_jadwal/bindings/detail_jadwal_binding.dart';
+import 'package:presensi/app/modules/detail_jadwal/views/detail_jadwal_view.dart';
+import 'package:presensi/app/modules/edit_jadwal/bindings/edit_jadwal_binding.dart';
+import 'package:presensi/app/modules/edit_jadwal/views/edit_jadwal_view.dart';
 
 import '../modules/add_jadwal/bindings/add_jadwal_binding.dart';
 import '../modules/add_jadwal/views/add_jadwal_view.dart';
@@ -100,6 +106,21 @@ class AppPages {
       name: _Paths.ABSEN,
       page: () => AbsenView(),
       binding: AbsenBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_JADWAL,
+      page: () => EditJadwalView(),
+      binding: EditJadwalBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_JADWAL,
+      page: () => DetailJadwalView(),
+      binding: DetailJadwalBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_ABSENSI,
+      page: () => DetailAbsensiView(),
+      binding: DetailAbsensiBinding(),
     ),
   ];
 }
