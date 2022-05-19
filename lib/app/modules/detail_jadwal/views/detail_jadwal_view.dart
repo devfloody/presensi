@@ -21,8 +21,15 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
           Container(
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: CustomColor.lightGrey,
+              borderRadius: BorderRadius.circular(12),
+              color: CustomColor.primary,
+              boxShadow: [
+                BoxShadow(
+                  color: CustomColor.black.withOpacity(0.25),
+                  blurRadius: 12,
+                  offset: Offset(0, 4),
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +44,7 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: CustomColor.primary,
+                            color: CustomColor.white,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -46,7 +53,7 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: CustomColor.black,
+                            color: CustomColor.white,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -55,7 +62,7 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: CustomColor.black,
+                            color: CustomColor.white,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -72,23 +79,20 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: CustomColor.grey,
+                        color: CustomColor.white,
                       ),
                     ),
                     Text(
                       "Jumlah Praktikan  :  ${jadwal['jml_mhs']} Mahasiswa",
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: CustomColor.grey,
-                      ),
+                          fontSize: 14, fontWeight: FontWeight.w400, color: CustomColor.white),
                     ),
                     Text(
                       "Ruang Praktikum   :  ${jadwal['ruang']}",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: CustomColor.grey,
+                        color: CustomColor.white,
                       ),
                     ),
                   ],
@@ -104,6 +108,7 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
+                            color: CustomColor.white,
                           ),
                         ),
                         Text(
@@ -111,6 +116,7 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
+                            color: CustomColor.white,
                           ),
                         ),
                       ],

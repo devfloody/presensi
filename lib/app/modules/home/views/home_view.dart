@@ -456,86 +456,89 @@ class HomeView extends GetView<HomeController> {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       Map<String, dynamic> absenList = snapshot.data!.docs[index].data();
-                      return Container(
-                        margin: EdgeInsets.only(right: 12),
-                        padding: EdgeInsets.all(16),
-                        width: 210,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: CustomColor.white,
-                          border: Border.all(
-                            color: CustomColor.lightGrey,
+                      return InkWell(
+                        onTap: () => Get.toNamed(Routes.DETAIL_ABSENSI, arguments: absenList),
+                        child: Container(
+                          margin: EdgeInsets.only(right: 12),
+                          padding: EdgeInsets.all(16),
+                          width: 210,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: CustomColor.white,
+                            border: Border.all(
+                              color: CustomColor.lightGrey,
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${absenList['hari']}, ${absenList['tanggal']} - ${absenList['jam_masuk']}',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${absenList['hari']}, ${absenList['tanggal']} - ${absenList['jam_masuk']}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: CustomColor.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Container(
+                                    height: 120,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: CustomColor.lightGrey,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        absenList['kelas'],
+                                        style: TextStyle(
+                                          fontSize: 48,
+                                          fontWeight: FontWeight.w500,
+                                          color: CustomColor.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 40,
+                                child: Text(
+                                  absenList['praktikum'],
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: CustomColor.black,
                                   ),
                                 ),
-                                SizedBox(height: 12),
-                                Container(
-                                  height: 120,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: CustomColor.lightGrey,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      absenList['kelas'],
-                                      style: TextStyle(
-                                        fontSize: 48,
-                                        fontWeight: FontWeight.w500,
-                                        color: CustomColor.black,
-                                      ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Praktikan hadir : ${absenList['jumlah_hadir']} orang',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomColor.black,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              height: 40,
-                              child: Text(
-                                absenList['praktikum'],
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: CustomColor.black,
-                                ),
+                                  Text(
+                                    'Praktikan tidak hadir : ${absenList['jumlah_tidak_hadir']} orang',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w400,
+                                      color: CustomColor.black,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Praktikan hadir : ${absenList['jumlah_hadir']} orang',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                                Text(
-                                  'Praktikan tidak hadir : ${absenList['jumlah_tidak_hadir']} orang',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
