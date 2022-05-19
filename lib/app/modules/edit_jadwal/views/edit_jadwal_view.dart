@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../config/theme.dart';
-import '../../../widgets/custom_toast.dart';
 import '../controllers/edit_jadwal_controller.dart';
 
 class EditJadwalView extends GetView<EditJadwalController> {
