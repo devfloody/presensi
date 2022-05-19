@@ -475,7 +475,7 @@ class HomeView extends GetView<HomeController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${absenList['tanggal']}',
+                                  '${absenList['hari']}, ${absenList['tanggal']} - ${absenList['jam_masuk']}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,

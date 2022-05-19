@@ -82,7 +82,6 @@ class EditJadwalView extends GetView<EditJadwalController> {
             ),
             onChanged: (value) {
               controller.selectedHari.value = value.toString();
-              CustomToast.successToast('Hari : ${controller.selectedHari.value}');
             },
           ),
           SizedBox(height: 32),

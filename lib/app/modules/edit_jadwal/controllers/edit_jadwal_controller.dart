@@ -33,7 +33,7 @@ class EditJadwalController extends GetxController {
           'hari': selectedHari.value,
         });
         Get.back();
-        CustomToast.successToast('Jadwal berhasil diubah');
+        CustomToast.successToast('Jadwal berhasil diubah ke hari ${selectedHari.value}');
       } catch (e) {
         isLoading.value = false;
         CustomToast.errorToast('Perubahan jadwal tidak dapat dilakukan.');

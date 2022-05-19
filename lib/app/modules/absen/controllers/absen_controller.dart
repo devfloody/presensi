@@ -44,6 +44,14 @@ class AbsenController extends GetxController {
               'kelas': jadwalList['kelas'],
               'materi': materiCtrl.text,
             });
+            await db
+                .collection('pengguna')
+                .doc(uid)
+                .collection('jadwal')
+                .doc(jadwalList['kode'])
+                .update({
+              'jml_pertemuan': jadwalList['jml_pertemuan'] + 1,
+            });
             CustomToast.successToast('Anda berhasil melakukan absensi.');
           } catch (e) {
             isLoading.value = false;

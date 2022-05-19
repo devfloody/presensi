@@ -39,6 +39,7 @@ class AddJadwalController extends GetxController {
           'hari': selectedHari.value,
           'ruang': selectedRuang.value,
           'jml_mhs': int.parse(jmlmhsCtrl.text.trim()),
+          'jml_pertemuan': 0,
         });
         Get.back();
         CustomToast.successToast('Jadwal berhasil ditambahkan');

@@ -194,7 +194,7 @@ class JadwalView extends GetView<JadwalController> {
                                 child: Center(
                                   child: IconButton(
                                     onPressed: () {
-                                      Get.toNamed(Routes.DETAIL_JADWAL);
+                                      Get.toNamed(Routes.DETAIL_JADWAL, arguments: jadwalList);
                                     },
                                     icon: Icon(
                                       IconlyBold.info_circle,

@@ -43,7 +43,6 @@ class AddJadwalView extends GetView<AddJadwalController> {
             ),
             onChanged: (value) {
               controller.selectedPraktikum.value = value.toString();
-              CustomToast.successToast('Praktikum : ${controller.selectedPraktikum.value}');
             },
           ),
           SizedBox(height: 16),
@@ -72,7 +71,6 @@ class AddJadwalView extends GetView<AddJadwalController> {
             ),
             onChanged: (value) {
               controller.selectedKode.value = value.toString();
-              CustomToast.successToast('Kode Praktikum : ${controller.selectedKode.value}');
             },
           ),
           SizedBox(height: 16),
@@ -101,7 +99,6 @@ class AddJadwalView extends GetView<AddJadwalController> {
             ),
             onChanged: (value) {
               controller.selectedKelas.value = value.toString();
-              CustomToast.successToast('Kelas : ${controller.selectedKelas.value}');
             },
           ),
           SizedBox(height: 16),
@@ -130,7 +127,6 @@ class AddJadwalView extends GetView<AddJadwalController> {
             ),
             onChanged: (value) {
               controller.selectedDosen.value = value.toString();
-              CustomToast.successToast('Dosen Pengampu : ${controller.selectedDosen.value}');
             },
           ),
           SizedBox(height: 16),
@@ -159,7 +155,6 @@ class AddJadwalView extends GetView<AddJadwalController> {
             ),
             onChanged: (value) {
               controller.selectedRuang.value = value.toString();
-              CustomToast.successToast('Ruang : ${controller.selectedRuang.value}');
             },
           ),
           SizedBox(height: 16),
@@ -188,7 +183,6 @@ class AddJadwalView extends GetView<AddJadwalController> {
             ),
             onChanged: (value) {
               controller.selectedHari.value = value.toString();
-              CustomToast.successToast('Hari : ${controller.selectedHari.value}');
             },
           ),
           SizedBox(height: 16),

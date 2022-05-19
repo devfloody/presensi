@@ -18,166 +18,190 @@ class RiwayatView extends GetView<RiwayatController> {
         title: Text('Riwayat Praktikum'),
         centerTitle: true,
       ),
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: controller.absenStream(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasData) {
-            final data = snapshot.requireData;
-            if (data.size == 0) {
-              return Center(
-                child: Text(
-                  'Belum ada data absen.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: CustomColor.black,
-                  ),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          TextField(
+            // controller: controller.emailCtrl,
+            decoration: InputDecoration(
+              hintText: 'Telusuri riwayat praktikum',
+              contentPadding: EdgeInsets.all(16),
+              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+              prefixIcon: Icon(IconlyLight.search),
+              fillColor: CustomColor.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide(
+                  color: CustomColor.lightGrey,
                 ),
-              );
-            }
-            return ListView.builder(
-              padding: EdgeInsets.all(16),
-              itemCount: data.docs.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> absenList = snapshot.data!.docs[index].data();
+              ),
+            ),
+          ),
+          SizedBox(height: 24),
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: controller.absenStream(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasData) {
+                final data = snapshot.requireData;
+                if (data.size == 0) {
+                  return Center(
+                    child: Text(
+                      'Belum ada data absen.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: CustomColor.black,
+                      ),
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  itemCount: data.docs.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    Map<String, dynamic> absenList = snapshot.data!.docs[index].data();
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 12),
+                      padding: EdgeInsets.all(16),
+                      height: Get.height * 0.2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: CustomColor.lightGrey),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: Get.width * 0.7,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Prakt. ${absenList['praktikum']}',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: CustomColor.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      "${absenList['hari']}, ${absenList['tanggal']} - ${absenList['jam_masuk']}",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: CustomColor.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Kehadiran Mahasiswa :',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: CustomColor.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      '- Hadir : ${absenList['jumlah_hadir']} Mahasiswa',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: CustomColor.success,
+                                      ),
+                                    ),
+                                    Text(
+                                      '- Tidak Hadir : ${absenList['jumlah_tidak_hadir']} Mahasiswa',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: CustomColor.error,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // Column(
+                                //   crossAxisAlignment: CrossAxisAlignment.start,
+                                //   children: [
+                                //     Text(
+                                //       'Dosen : ${absenList['dosen']}',
+                                //       style: TextStyle(
+                                //         fontSize: 12,
+                                //         fontWeight: FontWeight.w600,
+                                //         color: CustomColor.black,
+                                //       ),
+                                //     ),
+                                //     Text(
+                                //       'Ruang : ${absenList['ruang']}',
+                                //       style: TextStyle(
+                                //         fontSize: 12,
+                                //         fontWeight: FontWeight.w400,
+                                //         color: CustomColor.black,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.primary,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    absenList['kelas'],
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 28,
+                                      color: CustomColor.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              } else {
                 return Container(
-                  margin: EdgeInsets.only(bottom: 12),
-                  padding: EdgeInsets.all(16),
-                  height: Get.height * 0.25,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: CustomColor.lightGrey),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: Get.width * 0.7,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Prakt. ${absenList['praktikum']}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  absenList['tanggal'],
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Kehadiran Mahasiswa :',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                                Text(
-                                  '- Hadir : ${absenList['jumlah_hadir']} Mahasiswa',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: CustomColor.success,
-                                  ),
-                                ),
-                                Text(
-                                  '- Tidak Hadir : ${absenList['jumlah_tidak_hadir']} Mahasiswa',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: CustomColor.error,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Dosen : ${absenList['dosen']}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                                Text(
-                                  'Ruang : ${absenList['ruang']}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: CustomColor.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: CustomColor.primary,
-                            ),
-                            child: Center(
-                              child: Text(
-                                absenList['kelas'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 28,
-                                  color: CustomColor.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  child: Center(
+                    child: Text('Belum ada data absen.'),
                   ),
                 );
-              },
-            );
-          } else {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: CustomColor.lightGrey),
-              ),
-              child: Center(
-                child: Text('Belum ada data absen.'),
-              ),
-            );
-          }
-        },
+              }
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
