@@ -58,7 +58,7 @@ class ProfileView extends GetView<ProfileController> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  '${user['role']} - ${user['nim_or_nik']}',
+                  '${user['role']} - ${user['nim']}',
                   style: Theme.of(context).textTheme.headline4!.copyWith(color: CustomColor.black),
                   textAlign: TextAlign.center,
                 ),

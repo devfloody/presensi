@@ -22,24 +22,6 @@ class RiwayatView extends GetView<RiwayatController> {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          TextField(
-            // controller: controller.emailCtrl,
-            decoration: InputDecoration(
-              hintText: 'Telusuri riwayat praktikum',
-              contentPadding: EdgeInsets.all(16),
-              hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
-              prefixIcon: Icon(IconlyLight.search),
-              fillColor: CustomColor.white,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(
-                  color: CustomColor.lightGrey,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 24),
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: controller.absenStream(),
             builder: (context, snapshot) {
@@ -139,27 +121,6 @@ class RiwayatView extends GetView<RiwayatController> {
                                       ),
                                     ],
                                   ),
-                                  // Column(
-                                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                                  //   children: [
-                                  //     Text(
-                                  //       'Dosen : ${absenList['dosen']}',
-                                  //       style: TextStyle(
-                                  //         fontSize: 12,
-                                  //         fontWeight: FontWeight.w600,
-                                  //         color: CustomColor.black,
-                                  //       ),
-                                  //     ),
-                                  //     Text(
-                                  //       'Ruang : ${absenList['ruang']}',
-                                  //       style: TextStyle(
-                                  //         fontSize: 12,
-                                  //         fontWeight: FontWeight.w400,
-                                  //         color: CustomColor.black,
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
                                 ],
                               ),
                             ),

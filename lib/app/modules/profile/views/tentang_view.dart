@@ -37,7 +37,7 @@ class TentangView extends GetView {
               ),
               SizedBox(height: 60),
               Text(
-                '- Presensi App -\nVersi 1.1.1',
+                '- Presensi App V1',
                 style:
                     Theme.of(context).textTheme.headline4!.copyWith(color: CustomColor.secondary),
                 textAlign: TextAlign.center,

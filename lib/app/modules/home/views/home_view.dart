@@ -74,7 +74,6 @@ class HomeView extends GetView<HomeController> {
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
-                    height: 200,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: CustomColor.primary,
@@ -116,7 +115,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    '${user['nim_or_nik']}',
+                                    '${user['nim']}',
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.w600,
@@ -142,40 +141,22 @@ class HomeView extends GetView<HomeController> {
                         ),
                         SizedBox(height: 16),
                         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                            stream: controller.absenStream(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: CustomColor.white,
-                                  ),
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              }
-                              if (snapshot.hasData) {
-                                final absen = snapshot.requireData;
-                                return Container(
-                                  height: 50,
-                                  width: Get.width,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: CustomColor.white,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Jumlah Kehadiran : ${absen.size} X Pertemuan',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                );
-                              }
+                          stream: controller.absenStream(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: CustomColor.white,
+                                ),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            if (snapshot.hasData) {
+                              final absen = snapshot.requireData;
                               return Container(
                                 height: 50,
                                 width: Get.width,
@@ -185,7 +166,7 @@ class HomeView extends GetView<HomeController> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    'Jumlah Kehadiran tidak ditemukan',
+                                    'Jumlah Kehadiran : ${absen.size} X Pertemuan',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText1!
@@ -193,7 +174,26 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                               );
-                            }),
+                            }
+                            return Container(
+                              height: 50,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: CustomColor.white,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Jumlah Kehadiran tidak ditemukan',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),

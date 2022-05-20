@@ -36,9 +36,9 @@ class SignupView extends GetView<SignupController> {
             ),
             SizedBox(height: 16),
             TextField(
-              controller: controller.nimornikCtrl,
+              controller: controller.nimCtrl,
               decoration: InputDecoration(
-                hintText: 'NIM/NIK',
+                hintText: 'NIM',
                 contentPadding: EdgeInsets.all(16),
                 hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
                 fillColor: CustomColor.lightGrey,
@@ -92,23 +92,7 @@ class SignupView extends GetView<SignupController> {
                 ),
               ),
             ),
-            SizedBox(height: 8),
-            Obx(
-              () => CheckboxListTile(
-                value: controller.isAdmin.value,
-                onChanged: (value) {
-                  controller.adminToggle(value);
-                },
-                activeColor: CustomColor.secondary,
-                contentPadding: EdgeInsets.all(0),
-                title: Text(
-                  'Sebagai Dosen',
-                  style: Theme.of(context).textTheme.headline5?.copyWith(color: CustomColor.black),
-                ),
-                controlAffinity: ListTileControlAffinity.leading,
-              ),
-            ),
-            SizedBox(height: 8),
+            SizedBox(height: 24),
             Obx(
               () => SizedBox(
                 height: 50,

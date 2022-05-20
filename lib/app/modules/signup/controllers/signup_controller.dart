@@ -12,7 +12,7 @@ class SignupController extends GetxController {
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController passCtrl = TextEditingController();
-  TextEditingController nimornikCtrl = TextEditingController();
+  TextEditingController nimCtrl = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -21,11 +21,6 @@ class SignupController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isHiding = true.obs;
   RxBool isAgree = false.obs;
-
-  void adminToggle(value) {
-    isAdmin.value = !isAdmin.value;
-    update();
-  }
 
   void agreeToggle(value) {
     isAgree.value = !isAgree.value;
@@ -36,7 +31,7 @@ class SignupController extends GetxController {
     if (nameCtrl.text.isNotEmpty &&
         emailCtrl.text.isNotEmpty &&
         passCtrl.text.isNotEmpty &&
-        nimornikCtrl.text.isNotEmpty) {
+        nimCtrl.text.isNotEmpty) {
       isLoading.value = true;
       if (isAgree.value != false) {
         try {
@@ -52,9 +47,9 @@ class SignupController extends GetxController {
                 'name': nameCtrl.text.trim(),
                 'email': emailCtrl.text.trim(),
                 'password': passCtrl.text.trim(),
-                'nim_or_nik': nimornikCtrl.text.trim(),
+                'nim': nimCtrl.text.trim(),
                 'uid': uid,
-                'role': isAdmin.value ? 'Dosen' : 'Asisten',
+                'role': 'Asisten',
                 'createdAt': FieldValue.serverTimestamp(),
               },
             );
@@ -98,7 +93,7 @@ class SignupController extends GetxController {
     } else {
       isLoading.value = false;
       CustomToast.warningToast(
-        'Nama, Email, NIM/NIK dan Password harus diisi.',
+        'Nama, Email, NIM dan Password harus diisi.',
       );
     }
   }

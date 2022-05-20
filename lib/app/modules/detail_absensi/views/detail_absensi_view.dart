@@ -44,7 +44,7 @@ class DetailAbsensiView extends GetView<DetailAbsensiController> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: CustomColor.white,
+                            color: CustomColor.secondary,
                           ),
                           textAlign: TextAlign.center,
                         ),
