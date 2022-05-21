@@ -9,6 +9,7 @@ import '../../../widgets/custom_toast.dart';
 
 class AbsenController extends GetxController {
   RxBool isLoading = false.obs;
+  RxBool isDosenHadir = false.obs;
   TextEditingController hadirCtrl = TextEditingController();
   TextEditingController kodeCtrl = TextEditingController();
   TextEditingController materiCtrl = TextEditingController();
@@ -25,16 +26,18 @@ class AbsenController extends GetxController {
           initializeDateFormatting('in_ID', 'Indonesia');
           String hari =
               DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
-          String tanggal = DateFormat('d/M/y', 'in_ID').format(DateTime.now());
+          String tanggal = DateFormat('d-M-y', 'in_ID').format(DateTime.now());
           String jamMasuk = DateFormat.Hm().format(DateTime.now());
-          String absenId = '$jamMasuk-$hari';
+          String absenId = '$jamMasuk-$hari-$tanggal';
 
           try {
             isLoading.value = false;
             await db.collection('pengguna').doc(uid).collection('data-absen').doc(absenId).set({
+              'asisten': jadwalList['asisten'],
               'kode': jadwalList['kode'],
               'hari': hari,
               'tanggal': tanggal,
+              'status_dosen': isDosenHadir.isFalse ? 'Dosen Tidak Hadir' : 'Dosen Hadir',
               'jam_masuk': '$jamMasuk WIB',
               'jumlah_hadir': int.parse(hadirCtrl.text),
               'jumlah_tidak_hadir': jadwalList['jml_mhs'] - int.parse(hadirCtrl.text),

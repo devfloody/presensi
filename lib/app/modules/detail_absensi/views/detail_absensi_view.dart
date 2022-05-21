@@ -75,7 +75,7 @@ class DetailAbsensiView extends GetView<DetailAbsensiController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Dosen : ${absensi['dosen']}",
+                      "Dosen : ${absensi['dosen']} (${absensi['status_dosen']})",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,

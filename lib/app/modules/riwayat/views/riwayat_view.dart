@@ -83,7 +83,7 @@ class RiwayatView extends GetView<RiwayatController> {
                                       ),
                                       SizedBox(height: 4),
                                       Text(
-                                        "${absenList['hari']}, ${absenList['tanggal']} - ${absenList['jam_masuk']}",
+                                        "${absenList['hari']}, ${absenList['tanggal']}, Pukul ${absenList['jam_masuk']}",
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,

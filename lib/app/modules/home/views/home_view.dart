@@ -139,61 +139,6 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 16),
-                        StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                          stream: controller.absenStream(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: CustomColor.white,
-                                ),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            }
-                            if (snapshot.hasData) {
-                              final absen = snapshot.requireData;
-                              return Container(
-                                height: 50,
-                                width: Get.width,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: CustomColor.white,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Jumlah Kehadiran : ${absen.size} X Pertemuan',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              );
-                            }
-                            return Container(
-                              height: 50,
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: CustomColor.white,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Jumlah Kehadiran tidak ditemukan',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
                       ],
                     ),
                   ),

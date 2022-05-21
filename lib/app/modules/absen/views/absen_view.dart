@@ -59,12 +59,12 @@ class AbsenView extends GetView<AbsenController> {
           SizedBox(height: 16),
           TextField(
             controller: controller.materiCtrl,
-            minLines: 3,
-            maxLines: 5,
-            maxLength: 500,
+            minLines: 1,
+            maxLines: 3,
+            maxLength: 200,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
-              labelText: 'Materi Ajar',
+              labelText: 'Materi',
               contentPadding: EdgeInsets.all(16),
               labelStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
               fillColor: CustomColor.white,
@@ -77,7 +77,43 @@ class AbsenView extends GetView<AbsenController> {
               ),
             ),
           ),
-          SizedBox(height: 32),
+          Text(
+            'Status Kehadiran Dosen : ',
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(fontWeight: FontWeight.w500, color: CustomColor.black),
+          ),
+          SizedBox(height: 8),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(
+                color: CustomColor.lightGrey,
+              ),
+            ),
+            child: Obx(
+              () => Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Switch.adaptive(
+                    value: controller.isDosenHadir.value,
+                    onChanged: (value) {
+                      controller.isDosenHadir.value = value;
+                    },
+                  ),
+                  Text(
+                    controller.isDosenHadir.value ? 'Dosen Hadir' : 'Dosen Tidak Hadir',
+                    style:
+                        Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 24),
           Obx(
             () => SizedBox(
               height: 50,

@@ -17,7 +17,12 @@ class AddJadwalController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  Future<void> addJadwal() async {
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
+    String uid = await auth.currentUser!.uid;
+    yield* db.collection('pengguna').doc(uid).snapshots();
+  }
+
+  Future<void> addJadwal(String nama) async {
     if (selectedPraktikum.value.isNotEmpty &&
         selectedKode.value.isNotEmpty &&
         selectedKelas.value.isNotEmpty &&
@@ -33,6 +38,7 @@ class AddJadwalController extends GetxController {
         isLoading.value = false;
         await db.collection('pengguna').doc(uid).collection('jadwal').doc(jadwalId).set({
           'praktikum': selectedPraktikum.value,
+          'asisten': nama,
           'kode': jadwalId.toUpperCase().trim(),
           'kelas': selectedKelas.value,
           'dosen': selectedDosen.value,
