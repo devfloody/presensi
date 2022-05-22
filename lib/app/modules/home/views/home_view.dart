@@ -318,7 +318,7 @@ class HomeView extends GetView<HomeController> {
                                         ),
                                         SizedBox(width: 8),
                                         Text(
-                                          'Absen',
+                                          'Hadiri',
                                           style: TextStyle(fontSize: 14),
                                         ),
                                       ],

@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:presensi/app/models/absen_gsheet_api/absen_gsheet_api.dart';
+import 'package:presensi/app/models/rekap_field/rekap_field.dart';
 
 import '../../../widgets/custom_toast.dart';
 
@@ -29,9 +31,11 @@ class AbsenController extends GetxController {
           String tanggal = DateFormat('d-M-y', 'in_ID').format(DateTime.now());
           String jamMasuk = DateFormat.Hm().format(DateTime.now());
           String absenId = '$jamMasuk-$hari-$tanggal';
+          int jmlTidakHadir = jadwalList['jml_mhs'] - int.parse(hadirCtrl.text);
 
           try {
             isLoading.value = false;
+            // Menyimpan Data Presensi Ke Firestore
             await db.collection('pengguna').doc(uid).collection('data-absen').doc(absenId).set({
               'asisten': jadwalList['asisten'],
               'kode': jadwalList['kode'],
@@ -47,6 +51,7 @@ class AbsenController extends GetxController {
               'kelas': jadwalList['kelas'],
               'materi': materiCtrl.text,
             });
+            // Menambah Jumlah Pertemuan pada Detail Jadwal
             await db
                 .collection('pengguna')
                 .doc(uid)
@@ -55,6 +60,24 @@ class AbsenController extends GetxController {
                 .update({
               'jml_pertemuan': jadwalList['jml_pertemuan'] + 1,
             });
+            // Menyimpan Data Presensi Ke Google Sheets
+            await AbsenSheetApi.absenSheet!.values.map.appendRows([
+              {
+                RekapField.asisten: jadwalList['asisten'],
+                RekapField.praktikum: jadwalList['praktikum'],
+                RekapField.kode: jadwalList['kode'],
+                RekapField.kelas: jadwalList['kelas'],
+                RekapField.ruang: jadwalList['ruang'],
+                RekapField.dosen: jadwalList['dosen'],
+                RekapField.status: isDosenHadir.isFalse ? 'Dosen Tidak Hadir' : 'Dosen Hadir',
+                RekapField.hari: hari,
+                RekapField.tanggal: tanggal,
+                RekapField.jam: '$jamMasuk WIB',
+                RekapField.jumlahHadir: hadirCtrl.text,
+                RekapField.jumlahTidakHadir: jmlTidakHadir.toString(),
+                RekapField.materi: materiCtrl.text,
+              }
+            ]);
             CustomToast.successToast('Anda berhasil melakukan absensi.');
           } catch (e) {
             isLoading.value = false;

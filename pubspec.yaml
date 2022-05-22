@@ -17,6 +17,7 @@ dependencies:
   flutter_native_splash: ^2.1.6
   flutter_svg: ^1.0.3
   get: 4.6.3
+  gsheets: ^0.4.2
   iconly: ^1.0.1
   image_picker: ^0.8.5
   intl: ^0.17.0
