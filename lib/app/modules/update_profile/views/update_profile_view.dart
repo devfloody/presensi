@@ -13,7 +13,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
   @override
   Widget build(BuildContext context) {
     controller.emailCtrl.text = user['email'];
-    controller.nimCtrl.text = user['nim_or_nik'];
+    controller.nimCtrl.text = user['nim'];
     controller.nameCtrl.text = user['name'];
 
     return Scaffold(
