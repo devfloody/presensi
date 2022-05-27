@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:presensi/app/models/absen_gsheet_api/absen_gsheet_api.dart';
-import 'package:presensi/app/models/rekap_field/rekap_field.dart';
 
+import '../../../models/absen_gsheet_api/absen_gsheet_api.dart';
+import '../../../models/rekap_field/rekap_field.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_toast.dart';
 
 class AbsenController extends GetxController {
@@ -20,7 +21,7 @@ class AbsenController extends GetxController {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future<void> absen(Map<String, dynamic> jadwalList) async {
-    if (hadirCtrl.text.isNotEmpty && kodeCtrl.text.isNotEmpty) {
+    if (hadirCtrl.text.isNotEmpty && kodeCtrl.text.isNotEmpty && materiCtrl.text.isNotEmpty) {
       if (int.parse(hadirCtrl.text) >= 0) {
         if (int.parse(hadirCtrl.text) <= jadwalList['jml_mhs']) {
           isLoading.value = true;
@@ -78,6 +79,7 @@ class AbsenController extends GetxController {
                 RekapField.materi: materiCtrl.text,
               }
             ]);
+            Get.offAllNamed(Routes.RIWAYAT);
             CustomToast.successToast('Anda berhasil melakukan absensi.');
           } catch (e) {
             isLoading.value = false;

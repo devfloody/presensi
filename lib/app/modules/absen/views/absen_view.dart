@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:presensi/app/controllers/main_controller.dart';
-import 'package:presensi/app/routes/app_pages.dart';
 
 import '../../../config/theme.dart';
 import '../controllers/absen_controller.dart';
 
 class AbsenView extends GetView<AbsenController> {
   final Map<String, dynamic> jadwalList = Get.arguments;
-  final mainCtrl = Get.find<MainController>();
 
   @override
   Widget build(BuildContext context) {
     controller.kodeCtrl.text = jadwalList['kode'];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Halaman Absen'),
+        title: Text('Halaman Presensi'),
         centerTitle: true,
       ),
       body: ListView(
@@ -125,12 +122,10 @@ class AbsenView extends GetView<AbsenController> {
                 onPressed: () async {
                   if (controller.isLoading.isFalse) {
                     await controller.absen(jadwalList);
-                    Get.offAllNamed(Routes.RIWAYAT);
-                    mainCtrl.currentIndex.value = 1;
                   }
                 },
                 child: Text(
-                  controller.isLoading.isFalse ? 'Absen' : 'Loading...',
+                  controller.isLoading.isFalse ? 'Tambah Presensi' : 'Loading...',
                   style: Theme.of(context).textTheme.button,
                 ),
               ),

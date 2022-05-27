@@ -14,6 +14,7 @@ class RiwayatView extends GetView<RiwayatController> {
 
   @override
   Widget build(BuildContext context) {
+    mainCtrl.currentIndex.value = 1;
     return Scaffold(
       appBar: AppBar(
         title: Text('Riwayat Praktikum'),
@@ -65,7 +66,7 @@ class RiwayatView extends GetView<RiwayatController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              width: Get.width * 0.7,
+                              width: Get.width * 0.6,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
