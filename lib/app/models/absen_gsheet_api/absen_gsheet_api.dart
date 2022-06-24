@@ -1,5 +1,7 @@
 import 'package:gsheets/gsheets.dart';
-import 'package:presensi/app/models/rekap_field/rekap_field.dart';
+
+import '../gsheet_field/jadwal_field.dart';
+import '../gsheet_field/rekap_field.dart';
 
 class AbsenSheetApi {
   static final _spreadsheetId = '1gMP0f9Ogr8yBOUEh_9a_bPMAX82lykI8P_DsHszFtX4';
@@ -18,14 +20,17 @@ class AbsenSheetApi {
   }
   ''';
   static final _gsheets = GSheets(_credentials);
-  static Worksheet? absenSheet;
+  static Worksheet? presensiSheet, jadwalSheet;
 
   static Future init() async {
     try {
       final spreadsheet = await _gsheets.spreadsheet(_spreadsheetId);
-      absenSheet = await _getWorkSheet(spreadsheet, title: "Rekap");
-      final barisPertama = RekapField.getFields();
-      absenSheet!.values.insertRow(1, barisPertama);
+      presensiSheet = await _getWorkSheet(spreadsheet, title: "Rekap");
+      jadwalSheet = await _getWorkSheet(spreadsheet, title: "Jadwal");
+      final barisPertamaRekap = RekapField.getRekapFields();
+      final barisPertamaJadwal = JadwalField.getJadwalFields();
+      presensiSheet!.values.insertRow(1, barisPertamaRekap);
+      jadwalSheet!.values.insertRow(1, barisPertamaJadwal);
     } catch (e) {
       print('Error init : $e');
     }

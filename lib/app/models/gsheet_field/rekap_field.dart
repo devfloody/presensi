@@ -13,7 +13,7 @@ class RekapField {
   static final String jumlahTidakHadir = 'Jumlah Praktikan Tidak Hadir';
   static final String materi = 'Materi Praktikum';
 
-  static List<String> getFields() => [
+  static List<String> getRekapFields() => [
         asisten,
         praktikum,
         kode,
@@ -26,6 +26,6 @@ class RekapField {
         jam,
         jumlahHadir,
         jumlahTidakHadir,
-        materi
+        materi,
       ];
 }

@@ -6,7 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../../../models/absen_gsheet_api/absen_gsheet_api.dart';
-import '../../../models/rekap_field/rekap_field.dart';
+import '../../../models/gsheet_field/rekap_field.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_toast.dart';
 
@@ -27,8 +27,7 @@ class AbsenController extends GetxController {
           isLoading.value = true;
           String uid = await auth.currentUser!.uid;
           initializeDateFormatting('in_ID', 'Indonesia');
-          String hari =
-              DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
+          String hari = DateFormat('EEEE, d MMMM yyyy', 'in_ID').format(DateTime.now()).split(',').first;
           String tanggal = DateFormat('d-M-y', 'in_ID').format(DateTime.now());
           String jamMasuk = DateFormat.Hm().format(DateTime.now());
           String absenId = '$jamMasuk-$hari-$tanggal';
@@ -53,16 +52,11 @@ class AbsenController extends GetxController {
               'materi': materiCtrl.text,
             });
             // Menambah Jumlah Pertemuan pada Detail Jadwal
-            await db
-                .collection('pengguna')
-                .doc(uid)
-                .collection('jadwal')
-                .doc(jadwalList['kode'])
-                .update({
+            await db.collection('pengguna').doc(uid).collection('jadwal').doc(jadwalList['kode']).update({
               'jml_pertemuan': jadwalList['jml_pertemuan'] + 1,
             });
             // Menyimpan Data Presensi Ke Google Sheets
-            await AbsenSheetApi.absenSheet!.values.map.appendRows([
+            await AbsenSheetApi.presensiSheet!.values.map.appendRows([
               {
                 RekapField.asisten: jadwalList['asisten'],
                 RekapField.praktikum: jadwalList['praktikum'],

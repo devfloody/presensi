@@ -56,7 +56,7 @@ class RiwayatView extends GetView<RiwayatController> {
                       child: Container(
                         margin: EdgeInsets.only(bottom: 12),
                         padding: EdgeInsets.all(16),
-                        height: Get.height * 0.22,
+                        height: Get.height * 0.24,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: CustomColor.lightGrey),

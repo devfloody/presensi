@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:presensi/app/models/absen_gsheet_api/absen_gsheet_api.dart';
+import 'package:presensi/app/models/gsheet_field/jadwal_field.dart';
 import 'package:presensi/app/widgets/custom_toast.dart';
 
 class AddJadwalController extends GetxController {
@@ -36,6 +38,7 @@ class AddJadwalController extends GetxController {
 
       try {
         isLoading.value = false;
+        // Menyimpan Data Jadwal ke Firestore
         await db.collection('pengguna').doc(uid).collection('jadwal').doc(jadwalId).set({
           'praktikum': selectedPraktikum.value,
           'asisten': nama,
@@ -47,6 +50,18 @@ class AddJadwalController extends GetxController {
           'jml_mhs': int.parse(jmlmhsCtrl.text.trim()),
           'jml_pertemuan': 0,
         });
+        // Menyimpan Data Jadwal ke Google Sheet
+        await AbsenSheetApi.jadwalSheet!.values.map.appendRows([
+          {
+            JadwalField.asisten: nama,
+            JadwalField.praktikum: selectedPraktikum.value,
+            JadwalField.kodePraktikum: jadwalId.toUpperCase().trim(),
+            JadwalField.kelas: selectedKelas.value,
+            JadwalField.dosen: selectedDosen.value,
+            JadwalField.hari: selectedHari.value,
+            JadwalField.jumlahMahasiswa: jmlmhsCtrl.text.trim(),
+          }
+        ]);
         Get.back();
         CustomToast.successToast('Jadwal berhasil ditambahkan');
       } catch (e) {
