@@ -37,7 +37,6 @@ class AddJadwalController extends GetxController {
       String jadwalId = '${selectedKode.value}-${selectedKelas.value}';
 
       try {
-        isLoading.value = false;
         // Menyimpan Data Jadwal ke Firestore
         await db.collection('pengguna').doc(uid).collection('jadwal').doc(jadwalId).set({
           'praktikum': selectedPraktikum.value,
@@ -62,6 +61,7 @@ class AddJadwalController extends GetxController {
             JadwalField.jumlahMahasiswa: jmlmhsCtrl.text.trim(),
           }
         ]);
+        isLoading.value = false;
         Get.back();
         CustomToast.successToast('Jadwal berhasil ditambahkan');
       } catch (e) {

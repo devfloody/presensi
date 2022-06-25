@@ -34,7 +34,6 @@ class AbsenController extends GetxController {
           int jmlTidakHadir = jadwalList['jml_mhs'] - int.parse(hadirCtrl.text);
 
           try {
-            isLoading.value = false;
             // Menyimpan Data Presensi Ke Firestore
             await db.collection('pengguna').doc(uid).collection('data-absen').doc(absenId).set({
               'asisten': jadwalList['asisten'],
@@ -73,6 +72,7 @@ class AbsenController extends GetxController {
                 RekapField.materi: materiCtrl.text,
               }
             ]);
+            isLoading.value = false;
             Get.offAllNamed(Routes.RIWAYAT);
             CustomToast.successToast('Anda berhasil melakukan absensi.');
           } catch (e) {
