@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.LabTE.presensi">
    <application
-        android:label="Presensi App"
+        android:label="Laboratory Attendance"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
