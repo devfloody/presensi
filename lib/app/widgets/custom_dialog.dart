@@ -57,10 +57,10 @@ class CustomAlertDialog {
                       style: TextStyle(color: CustomColor.grey),
                     ),
                     style: ElevatedButton.styleFrom(
+                      foregroundColor: CustomColor.primary,
+                      backgroundColor: CustomColor.lightGrey,
                       padding: EdgeInsets.symmetric(vertical: 12),
-                      primary: CustomColor.lightGrey,
                       elevation: 0,
-                      onPrimary: CustomColor.primary,
                     ),
                   ),
                 ),
@@ -71,7 +71,7 @@ class CustomAlertDialog {
                     onPressed: onConfirm,
                     child: Text(confirmText),
                     style: ElevatedButton.styleFrom(
-                      primary: confirmColor,
+                      backgroundColor: confirmColor,
                       padding: EdgeInsets.symmetric(vertical: 12),
                       elevation: 0,
                     ),

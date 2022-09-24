@@ -81,10 +81,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                           }
                           return Text(
                             'Tidak Ada Foto',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5!
-                                .copyWith(color: CustomColor.grey),
+                            style: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
                           );
                         }
                       },
@@ -94,8 +91,8 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                         controller.pickImage();
                       },
                       style: TextButton.styleFrom(
+                        foregroundColor: CustomColor.white,
                         backgroundColor: CustomColor.primary,
-                        primary: CustomColor.white,
                       ),
                       child: Text('Pilih file'),
                     ),

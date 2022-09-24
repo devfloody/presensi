@@ -64,8 +64,7 @@ class HomeView extends GetView<HomeController> {
               }
               if (snapshot.hasData) {
                 Map<String, dynamic> user = snapshot.data!.data()!;
-                String defaultImage =
-                    'https://ui-avatars.com/api/?name=${user['name']}&background=FFAF5A';
+                String defaultImage = 'https://ui-avatars.com/api/?name=${user['name']}&background=FFAF5A';
 
                 return InkWell(
                   onTap: () {
@@ -301,8 +300,8 @@ class HomeView extends GetView<HomeController> {
                                       }
                                     },
                                     style: TextButton.styleFrom(
+                                      foregroundColor: CustomColor.black,
                                       backgroundColor: CustomColor.secondary,
-                                      primary: CustomColor.black,
                                       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
