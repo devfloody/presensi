@@ -1,7 +1,7 @@
 import 'package:gsheets/gsheets.dart';
 
-import '../gsheet_field/jadwal_field.dart';
-import '../gsheet_field/rekap_field.dart';
+import '../../models/gsheet_field/jadwal_field.dart';
+import '../../models/gsheet_field/rekap_field.dart';
 
 class AbsenSheetApi {
   static final _spreadsheetId = '1gMP0f9Ogr8yBOUEh_9a_bPMAX82lykI8P_DsHszFtX4';

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import '../../../models/absen_gsheet_api/absen_gsheet_api.dart';
+import '../../../data/absen_gsheet_api/absen_gsheet_api.dart';
 import '../../../models/gsheet_field/rekap_field.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_toast.dart';

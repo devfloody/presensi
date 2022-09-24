@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi/app/models/absen_gsheet_api/absen_gsheet_api.dart';
+import 'package:presensi/app/data/absen_gsheet_api/absen_gsheet_api.dart';
 
 import 'app/config/theme.dart';
 import 'app/controllers/main_controller.dart';

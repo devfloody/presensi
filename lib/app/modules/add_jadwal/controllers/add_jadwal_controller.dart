@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:presensi/app/models/absen_gsheet_api/absen_gsheet_api.dart';
+import 'package:presensi/app/data/absen_gsheet_api/absen_gsheet_api.dart';
 import 'package:presensi/app/models/gsheet_field/jadwal_field.dart';
 import 'package:presensi/app/widgets/custom_toast.dart';
 
