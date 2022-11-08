@@ -30,7 +30,7 @@ class App extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: customTheme(),
+            theme: customTheme(context),
             home: Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
@@ -42,7 +42,7 @@ class App extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Presensi App",
-          theme: customTheme(),
+          theme: customTheme(context),
           initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
           getPages: AppPages.routes,
         );

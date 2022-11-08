@@ -12,7 +12,7 @@ class CustomColor {
   static const Color warning = Color(0xFFEB8600);
 }
 
-ThemeData customTheme() {
+ThemeData customTheme(BuildContext context) {
   return ThemeData(
     colorSchemeSeed: CustomColor.primary,
     scaffoldBackgroundColor: CustomColor.white,
@@ -23,6 +23,16 @@ ThemeData customTheme() {
         color: CustomColor.white,
         fontSize: 18,
         fontWeight: FontWeight.w500,
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: EdgeInsets.all(16),
+      hintStyle: Theme.of(context).textTheme.headline5!.copyWith(color: CustomColor.grey),
+      fillColor: CustomColor.lightGrey,
+      filled: true,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4),
+        borderSide: BorderSide.none,
       ),
     ),
     textTheme: const TextTheme(
